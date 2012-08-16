@@ -1,0 +1,204 @@
+{
+    "project": {
+        "name": "LearnShip JS API",
+        "version": "0.0.1",
+        "logo": "/images/api/logo.png"
+    },
+    "files": {
+        "js/ls/ui/Dropdown.js": {
+            "name": "js/ls/ui/Dropdown.js",
+            "modules": {
+                "ui": 1
+            },
+            "classes": {
+                "ui.Dropdown": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "ui": 1
+            }
+        }
+    },
+    "modules": {
+        "ui": {
+            "name": "ui",
+            "submodules": {},
+            "classes": {
+                "ui.Dropdown": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "ui": 1
+            },
+            "tag": "module",
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 5
+        }
+    },
+    "classes": {
+        "ui.Dropdown": {
+            "name": "ui.Dropdown",
+            "shortname": "ui.Dropdown",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ui",
+            "namespace": "ui",
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 5,
+            "description": "Dropdown is a solution for showing and hiding a set of options for the user to choose from.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "$el",
+                    "description": "jQuery object to use as the trigger for the dropdown whose next sibling will be used as the\nmenu",
+                    "type": "Object"
+                },
+                {
+                    "name": "options",
+                    "description": "An object to use to override the default settings",
+                    "type": "Object",
+                    "optional": true
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 16,
+            "description": "The configuration for the current dropdown instance",
+            "itemtype": "property",
+            "name": "_settings",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 23,
+            "description": "A jQuery object containing the element used as the trigger for the dropdown",
+            "itemtype": "property",
+            "name": "_$el",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 30,
+            "description": "A jQuery object containing the element used as the menu for the dropdown",
+            "itemtype": "property",
+            "name": "_$menu",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 37,
+            "description": "When the dropdown receives a click it will close all other dropdowns and toggle its state.",
+            "itemtype": "event",
+            "name": "click.dropdown",
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 56,
+            "description": "Whenever there is a click, all open dropdowns should close.",
+            "itemtype": "event",
+            "name": "click.dropdown",
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 63,
+            "description": "Close all dropdowns",
+            "itemtype": "method",
+            "name": "closeDropdowns",
+            "static": 1,
+            "params": [
+                {
+                    "name": "$keepOpen",
+                    "description": "A jQuery object containing dropdowns to keep open",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 72,
+            "description": "The number of existing ui.Dropdown instances",
+            "itemtype": "property",
+            "name": "count",
+            "type": "{Number}",
+            "static": 1,
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 80,
+            "description": "The function that is called in order to close the dropbox",
+            "itemtype": "attribute",
+            "name": "close",
+            "type": "{Function}",
+            "static": 1,
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 97,
+            "description": "The function that is called in order to open the dropbox",
+            "itemtype": "attribute",
+            "name": "open",
+            "type": "{Function}",
+            "static": 1,
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 116,
+            "description": "Open the dropdown menu",
+            "itemtype": "method",
+            "name": "open",
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        },
+        {
+            "file": "js/ls/ui/Dropdown.js",
+            "line": 123,
+            "description": "Close the dropdown menu",
+            "itemtype": "method",
+            "name": "close",
+            "class": "ui.Dropdown",
+            "module": "ui",
+            "namespace": "ui"
+        }
+    ]
+}

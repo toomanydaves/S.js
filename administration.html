@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="/css/administration.css" rel="stylesheet" type="text/css">
+        <link href="/css/plugins/jquery.lsdropdown.css" rel="stylesheet" type="text/css">
+        <script>
+            var require = {
+                baseUrl: '/js/lib',
+                paths:   { 'js': '/js', 'ls': '/js/ls', 'plugin': '/js/plugins', 'utility': '/js/utilities' },
+                deps:    [ 'js/ls', 'jquery' ]
+            };
+        </script>
+        <script src="/js/lib/require.js"></script>
+    </head>
+    <body>
+        <div id="navbar"></div>
+        <div id="actions">
+            <div class="navigation">
+                <div class="nav-item">People</div>
+                    <ul class="sub-menu">
+                        <li id="student-lists">Students</li>
+                        <li id="hrManager-lists">HR managers</li>
+                        <li id="teacher-lists">Teachers</li>
+                        <li id="staff-lists">LearnShip staff</li>
+                    </ul>
+                <div class="nav-item selected">Organizations</div>
+                    <ul class="sub-menu">
+                        <li id="B2BCustomer-lists">B2B customers</li> 
+                        <li id="funder-lists">Funders</li>
+                    </ul>
+                <div class="nav-item">Trainings</div>
+                    <ul class="sub-menu">
+                        <li id="course-lists">Courses</li>
+                        <li id="session-lists">Sessions</li>
+                    </ul>
+                <div class="nav-item">Material</div>
+                    <ul class="sub-menu">
+                        <li id="book-lists">Books</li>
+                        <li id="slideshow-lists">Slideshows</li>
+                        <li id="ELearning-lists">ELearning<li>
+                    </ul>
+                <div class="nav-item">Project management</div>
+            </div>
+            <div class="access">
+                <div>Welcome back, <span class="user-concept">Simon</span>.</div>
+                <div>Logout</div>
+            </div>
+            <div class="domain">
+                <div class="button-wrapper">
+                    <div id="content-add" class="button">
+                        <img class="action-icon" src="/images/button/add-white.png" />
+                        <img class="complement-icon" src="/images/button/more-options.png" />
+                    </div>
+                    <div class="content-add menu">
+                        <ul id="content-add-options">
+                            <li class="instructions">Add a new...</li>
+                            <li class="link"><a href="#">student</a></li>
+                            <li class="link"><a href="#">course</a></li>
+                            <li class="link"><a href="#">session</a></li>
+                        </ul>
+                    </div>
+                    <div class="button-divider"></div>
+                    <div id="content-search">
+                        <input placeholder="Search by name" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            require([ 'jquery', 'plugin/jquery.lsdropdown' ], function ( $ ) {
+                $('#content-add').lsdropdown();
+            });
+        </script>
+    </body>
+</html>
