@@ -67,9 +67,13 @@
             </div>
         </div>
         <script>
-            require([ 'jquery', 'plugin/jquery.lsdropdown' ], function ( $ ) {
-                $('#content-add').lsdropdown();
-            });
+            require(
+                [ 'jquery', 'plugin/jquery.lsdropdown', 'plugin/jquery.lsviewer' ], 
+                function ( $ ) {
+                    $('#content-add').lsdropdown();
+                    $('body').lsviewer({ duration: 1000 });
+                }
+            );
         </script>
     </body>
 </html>

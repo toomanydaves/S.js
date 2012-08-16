@@ -26,7 +26,7 @@ define([ 'jquery', 'ls/ui' ], function ( $, ui ) {
          * @type {Object}
          * @private
          */
-        this._$el = $el.addClass('lsdropdown');
+        this._$el = $el.addClass('lsdropdown').data('lsdropdown', this);
         /**
          * A jQuery object containing the element used as the menu for the dropdown
          * @property _$menu

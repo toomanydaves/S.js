@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ui.Dropdown - LearnShip JS API</title>
+    <title>view.Viewport - LearnShip JS API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -92,7 +92,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>ui.Dropdown Class</h1>
+                        <h1>view.Viewport Class</h1>
 <div class="box meta">
     
 
@@ -100,13 +100,13 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l5"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:5</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l5"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:5</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/ui.html">ui</a>
+            Module: <a href="../modules/view.html">view</a>
         
     
 
@@ -116,14 +116,16 @@
 
 
 <div class="box intro">
-    <p>Dropdown is a solution for showing and hiding a set of options for the user to choose from.</p>
+    <p>Viewport is used to display the screens holding the content of individual viewpoints. These screens can be
+shifted left and right, as the user moves deeper or shallower in a particular context, or replaced entirely when
+the context changes.</p>
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_ui.Dropdown" class="method item">
-    <h3 class="name"><code>ui.Dropdown</code></h3>
+        <div id="method_view.Viewport" class="method item">
+    <h3 class="name"><code>view.Viewport</code></h3>
 
     
         <div class="args">
@@ -170,7 +172,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l5"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:5</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l5"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:5</code></a>
         
         </p>
 
@@ -199,8 +201,7 @@
                     
 
                     <div class="param-description">
-                        <p>jQuery object to use as the trigger for the dropdown whose next sibling will be used as the
-menu</p>
+                        <p>A jQuery object containing the element to use as the basis for the viewport</p>
                     </div>
 
                     
@@ -263,23 +264,35 @@ menu</p>
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_close">close</a>
+                                <a href="#method_activate">activate</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_closeDropdowns">closeDropdowns</a>
+                                <a href="#method_deactivate">deactivate</a>
 
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_open">open</a>
+                                <a href="#method_remove">remove</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_shiftLeft">shiftLeft</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_shiftRight">shiftRight</a>
 
                                 
                                 
@@ -297,13 +310,6 @@ menu</p>
                         
                             <li class="index-item property private">
                                 <a href="#property__$el">_$el</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property__$menu">_$menu</a>
 
                                 
                                 
@@ -336,11 +342,15 @@ menu</p>
                     <ul class="index-list attrs">
                         
                             <li class="index-item attr">
-                                <a href="#attr_close">close</a>
+                                <a href="#attr_delay">delay</a>
                             </li>
                         
                             <li class="index-item attr">
-                                <a href="#attr_open">open</a>
+                                <a href="#attr_duration">duration</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_viewportPadding">viewportPadding</a>
                             </li>
                         
                     </ul>
@@ -354,14 +364,7 @@ menu</p>
                     <ul class="index-list events">
                         
                             <li class="index-item event">
-                                <a href="#event_click.dropdown">click.dropdown</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item event">
-                                <a href="#event_click.dropdown">click.dropdown</a>
+                                <a href="#event_lsviewport.screen-ready">lsviewport.screen-ready</a>
 
                                 
                                 
@@ -377,8 +380,8 @@ menu</p>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_close" class="method item">
-    <h3 class="name"><code>close</code></h3>
+                    <div id="method_activate" class="method item">
+    <h3 class="name"><code>activate</code></h3>
 
     
         <span class="paren">()</span>
@@ -409,7 +412,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l121"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:121</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l153"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:153</code></a>
         
         </p>
 
@@ -420,7 +423,7 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>Close the dropdown menu</p>
+        <p>A stub which can be used to execute code when a transition is finished</p>
     </div>
 
     
@@ -431,8 +434,116 @@ menu</p>
 </div>
 
                 
-                    <div id="method_closeDropdowns" class="method item">
-    <h3 class="name"><code>closeDropdowns</code></h3>
+                    <div id="method_deactivate" class="method item">
+    <h3 class="name"><code>deactivate</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l158"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:158</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>A stub which can be used to execute code before a transition begins</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_remove" class="method item">
+    <h3 class="name"><code>remove</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l163"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:163</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Remove all viewport elements</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_shiftLeft" class="method item">
+    <h3 class="name"><code>shiftLeft</code></h3>
 
     
         <div class="args">
@@ -440,7 +551,19 @@ menu</p>
             
                 <li class="arg">
                     
-                        <code class="optional">[$keepOpen]</code>
+                        <code>url</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[data]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[callback]</code>
                     
                 </li>
             
@@ -457,8 +580,6 @@ menu</p>
     
 
     
-        <span class="flag static">static</span>
-    
 
     
 
@@ -475,7 +596,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l61"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:61</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l101"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:101</code></a>
         
         </p>
 
@@ -486,7 +607,7 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>Close all dropdowns</p>
+        <p>Shift the screens left, adding a new, active screen.</p>
     </div>
 
     
@@ -497,15 +618,46 @@ menu</p>
             
                 <li class="param">
                     
-                        <code class="param-name optional">[$keepOpen]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">url</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The URL to call to get the content for the screen</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[data]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> |  | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                         <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>A jQuery object containing dropdowns to keep open</p>
+                        <p>A map or string to send along with the request</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A function to call once the screen has been positioned in the viewport</p>
                     </div>
 
                     
@@ -521,8 +673,8 @@ menu</p>
 </div>
 
                 
-                    <div id="method_open" class="method item">
-    <h3 class="name"><code>open</code></h3>
+                    <div id="method_shiftRight" class="method item">
+    <h3 class="name"><code>shiftRight</code></h3>
 
     
         <span class="paren">()</span>
@@ -553,7 +705,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l114"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:114</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l66"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:66</code></a>
         
         </p>
 
@@ -564,7 +716,7 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>Open the dropdown menu</p>
+        <p>Shift the screens right, removing the previously active screen.</p>
     </div>
 
     
@@ -608,7 +760,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l23"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:23</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l23"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:23</code></a>
         
         </p>
 
@@ -618,53 +770,7 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>A jQuery object containing the element used as the trigger for the dropdown</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__$menu" class="property item private">
-    <h3 class="name"><code>_$menu</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l30"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:30</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>A jQuery object containing the element used as the menu for the dropdown</p>
+        <p>A jQuery object containing the element used as the basis for the viewport</p>
     </div>
 
     
@@ -700,7 +806,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l16"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:16</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l16"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:16</code></a>
         
         </p>
 
@@ -710,7 +816,7 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>The configuration for the current dropdown instance</p>
+        <p>The configuration for the current viewport instance</p>
     </div>
 
     
@@ -746,7 +852,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l70"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:70</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l32"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:32</code></a>
         
         </p>
 
@@ -756,7 +862,7 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>The number of existing ui.Dropdown instances</p>
+        <p>The number of existing viewport instances</p>
     </div>
 
     
@@ -775,10 +881,10 @@ menu</p>
                 <h2 class="off-left">Attributes</h2>
 
                 
-                    <div id="attr_close" class="attr item">
-    <a name="config_close"></a> 
-    <h3 class="name"><code>close</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                    <div id="attr_delay" class="attr item">
+    <a name="config_delay"></a> 
+    <h3 class="name"><code>delay</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
 
     
 
@@ -805,7 +911,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l78"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:78</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l40"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:40</code></a>
         
         </p>
 
@@ -815,9 +921,11 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>The function that is called in order to close the dropbox</p>
+        <p>When removing then adding new screens in the viewport, the amount to pause in between</p>
     </div>
 
+    
+        <p><strong>Default:</strong> 300(ms)</p>
     
 
     
@@ -826,10 +934,10 @@ menu</p>
 </div>
 
                 
-                    <div id="attr_open" class="attr item">
-    <a name="config_open"></a> 
-    <h3 class="name"><code>open</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                    <div id="attr_duration" class="attr item">
+    <a name="config_duration"></a> 
+    <h3 class="name"><code>duration</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
 
     
 
@@ -856,7 +964,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l95"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:95</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l48"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:48</code></a>
         
         </p>
 
@@ -866,9 +974,64 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>The function that is called in order to open the dropbox</p>
+        <p>The duration for a screen to animate into/out of position</p>
     </div>
 
+    
+        <p><strong>Default:</strong> 700(ms)</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_viewportPadding" class="attr item">
+    <a name="config_viewportPadding"></a> 
+    <h3 class="name"><code>viewportPadding</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l56"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:56</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The padding to insert between the screen and the viewport</p>
+    </div>
+
+    
+        <p><strong>Default:</strong> 8(px)</p>
     
 
     
@@ -885,8 +1048,8 @@ menu</p>
                 <h2 class="off-left">Events</h2>
 
                 
-                    <div id="event_click.dropdown" class="events item">
-    <h3 class="name"><code>click.dropdown</code></h3>
+                    <div id="event_lsviewport.screen-ready" class="events item">
+    <h3 class="name"><code>lsviewport.screen-ready</code></h3>
     <span class="type"></span>
 
     
@@ -908,7 +1071,7 @@ menu</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l37"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:37</code></a>
+        <a href="..&#x2F;files&#x2F;js_ls_view_Viewport.js.html#l123"><code>js&#x2F;ls&#x2F;view&#x2F;Viewport.js:123</code></a>
         
         </p>
 
@@ -918,50 +1081,7 @@ menu</p>
     </div>
 
     <div class="description">
-        <p>When the dropdown receives a click it will close all other dropdowns and toggle its state.</p>
-    </div>
-
-    
-
-
-    
-</div>
-
-                
-                    <div id="event_click.dropdown" class="events item">
-    <h3 class="name"><code>click.dropdown</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;js_ls_ui_Dropdown.js.html#l56"><code>js&#x2F;ls&#x2F;ui&#x2F;Dropdown.js:56</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Whenever there is a click, all open dropdowns should close.</p>
+        <p>The event to bind to when a screen is in position and the content has been loaded.</p>
     </div>
 
     

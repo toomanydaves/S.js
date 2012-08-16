@@ -1,0 +1,40 @@
+#lsviewport {
+    background-color:   #1d252f;
+    color:              #fff;
+    padding:            8px;
+}
+.lsviewport-screen {
+    background-color:   #3a424b;
+    min-width:          840px;
+    position:           absolute;
+}
+#lspath {
+    background-color:   #c9b9a0;
+    border-bottom:      1px solid #a49883;
+    border-top:         1px solid #a49883;
+    box-shadow:         0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    color:              #fff;
+    font-size:          20px;
+    height:             36px;
+    padding-left:       8px;
+}
+#lspath-pointer {
+    position:           absolute;
+}
+.lspath-divider {
+    margin-top:         8px;
+    position:           absolute;
+}
+.lspath-entry {
+    margin-top:         8px;
+    position:           absolute;
+}
+#lspath-entry-active {
+    cursor:             default;
+    text-decoration:    none;
+    text-shadow:        #a49883 1px 1px;
+}
+.lspath-entry-inactive {
+    cursor:             pointer;
+    text-decoration:    underline;
+}

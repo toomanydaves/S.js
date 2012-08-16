@@ -43,11 +43,19 @@
             
                 <li><a href="..&#x2F;classes/ui.Dropdown.html">ui.Dropdown</a></li>
             
+                <li><a href="..&#x2F;classes/view.Path.html">view.Path</a></li>
+            
+                <li><a href="..&#x2F;classes/view.Viewer.html">view.Viewer</a></li>
+            
+                <li><a href="..&#x2F;classes/view.Viewport.html">view.Viewport</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="..&#x2F;modules/ui.html">ui</a></li>
+            
+                <li><a href="..&#x2F;modules/view.html">view</a></li>
             
             </ul>
         </div>
@@ -116,7 +124,7 @@ define([ &#x27;jquery&#x27;, &#x27;ls&#x2F;ui&#x27; ], function ( $, ui ) {
          * @type {Object}
          * @private
          *&#x2F;
-        this._$el = $el.addClass(&#x27;lsdropdown&#x27;);
+        this._$el = $el.addClass(&#x27;lsdropdown&#x27;).data(&#x27;lsdropdown&#x27;, this);
         &#x2F;**
          * A jQuery object containing the element used as the menu for the dropdown
          * @property _$menu
@@ -147,9 +155,7 @@ define([ &#x27;jquery&#x27;, &#x27;ls&#x2F;ui&#x27; ], function ( $, ui ) {
      * Whenever there is a click, all open dropdowns should close.
      * @event click.dropdown
      *&#x2F;
-    $(function () {
-        $(&#x27;html&#x27;).on(&#x27;click.lsdropdown&#x27;, ui.Dropdown.closeDropdowns);
-    });
+    $(&#x27;html&#x27;).on(&#x27;click&#x27;, function ( ) { ui.Dropdown.closeDropdowns(); });
     &#x2F;**
      * Close all dropdowns
      * @method closeDropdowns
@@ -196,7 +202,7 @@ define([ &#x27;jquery&#x27;, &#x27;ls&#x2F;ui&#x27; ], function ( $, ui ) {
 
             $menu.children().hide();
             $menu.height(0).addClass(&#x27;open&#x27;).animate({ height: menuHeight }, 300, &#x27;swing&#x27;, function ( ) {
-                $menu.children.fadeIn(200, function ( ) {
+                $menu.children().fadeIn(200, function ( ) {
                     $menu.height($menu.children().outerHeight());
                 });
             });
@@ -218,6 +224,7 @@ define([ &#x27;jquery&#x27;, &#x27;ls&#x2F;ui&#x27; ], function ( $, ui ) {
             this._settings.close(this)
         }
     };
+    return ui.Dropdown;
 });
 
     </pre>

@@ -13,12 +13,11 @@ define([ 'jquery', 'ls/ui/Dropdown' ], function ( $, Dropdown ) {
                 // ... and the plugin has yet to be instantiated on the element,...
                 if ( request.method === 'init' ) {
                     // ... create a new plugin instance and bind it to the data object of the element.
-                    $this.data('lsdropdown', new Dropdown($this, request.args));
+                    new Dropdown($this, request.args);
                 }
                 // When there is already a plugin instance, retrieve it from the data object and call a method.
                 else {
-                    plugin = $this.data('lsdropdown');
-                    plugin[request.method].call(plugin, request.args);
+                    Dropdown.prototype[request.method].call($this.data('lsdropdown'), request.args);
                 }
             }
             // Otherwise, output any errors

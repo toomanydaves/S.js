@@ -1,0 +1,72 @@
+.lsindex {
+    width:              840px;
+}
+.lsindex-instructions {
+    color:              #999a9b;
+    font-size:          12px;
+    padding:            8px;
+}
+.lsindex-instructions strong {
+    color:              #d8d8d8;
+    font-size:          14px;
+    font-weight:        normal;
+    text-shadow:        #333 1px 1px;
+}
+.lsindex-list {
+    background-color:   #f0f0f0;
+    padding:            8px;
+    margin:             8px;
+}
+.lsindex-list-title {
+    margin-bottom:      2px;
+}
+.lsindex-list-title span {
+    color:              #2b955d;
+    cursor:             pointer;
+    font-size:          16px;
+    text-decoration:    underline;
+}
+.lsindex-list-title input {
+    margin:             3px 4px;
+}
+.lsindex-list-description {
+    color:              #3a424b;
+    font-size:          12px;
+    margin-left:        20px;
+}
+.lsindex-list-actions {
+    display:            none;
+}
+.lsindex-list-actions .button-wrapper {
+    cursor:             default;
+    float:              right;
+    margin:             -4px;
+    padding:            1px;
+}
+.lsindex-list-actions .button {
+    background-color:   #f3f3f3;
+    border:             1px solid #d3d4d7;
+    box-shadow:         inset 1px 1px 0 #ffffff;
+    float:              left;
+    height:             16px;
+    margin:             1px;
+    padding:            2px;
+}
+.lsindex-list-actions .button img {
+    height:             16px;
+}
+.lsindex-actions {
+    height:             58px;
+    margin-top:         12px;
+    padding:            4px 8px;
+}
+.lsindex-actions .button-wrapper {
+    float:              right;
+}
+.lsindex-actions .button {
+    float:              left;
+    margin:             4px;
+}
+.lsindex-add-screen.button {
+    display:            none;
+}
