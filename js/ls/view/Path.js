@@ -72,9 +72,9 @@ define([ 'jquery', 'ls/view' ], function ($, view) {
          * @attribute pointerPng
          * @type {String}
          * @static
-         * @default '/js/jquery/plugins/jquery.lsview.pointer.png'
+         * @default '/images/plugins/jquery.lsview.pointer.png'
          */
-        pointerPng: '/js/jquery/plugins/jquery.lsview.pointer.png'
+        pointerPng: '/images/plugins/jquery.lsview.pointer.png'
     };
     view.Path.prototype = {
         /**
