@@ -11,7 +11,7 @@ define([ 'jquery', 'ls/ui' ], function ( $, ui ) {
      * menu
      * @param {Object} [options] An object to use to override the default settings
      */
-    ui.Dropdown = function ( $el, options ) {
+    ui.Dropdown = function ( $el ) {
         var dropdown = this;
         /**
          * The configuration for the current dropdown instance
@@ -19,7 +19,7 @@ define([ 'jquery', 'ls/ui' ], function ( $, ui ) {
          * @type {Object}
          * @private
          */
-        this._settings = $.extend({}, ui.Dropdown.defaults, options);
+        this._settings = $.extend({}, ui.Dropdown.defaults);
         /**
          * A jQuery object containing the element used as the trigger for the dropdown
          * @property _$el
@@ -33,25 +33,8 @@ define([ 'jquery', 'ls/ui' ], function ( $, ui ) {
          * @type {Object}
          * @private
          */
-        this._$menu = $el.next().addClass('lsdropdown-menu');
-        /**
-         * When the dropdown receives a click it will close all other dropdowns and toggle its state.
-         * @event click.dropdown
-         */
-        this._$el.on('click.lsdropdown', function ( e ) {
-            e.stopImmediatePropagation();
-            if ( dropdown._$el.is('.disabled, :disabled') ) {
-                return false;
-            }
-            ui.Dropdown.closeDropdowns(dropdown._$el);
-            if ( dropdown._$menu.hasClass('open') ) {
-                dropdown._settings.close(dropdown);
-            } else {
-                dropdown._settings.open(dropdown);
-            }
-            return false;
-        });
-        ui.Dropdown.count++;
+        this._$menu = null;
+        ui.Dropdown.instances.push(this);
     };
     /**
      * Whenever there is a click, all open dropdowns should close.
@@ -68,12 +51,21 @@ define([ 'jquery', 'ls/ui' ], function ( $, ui ) {
         $('.lsdropdown-menu.open').prev('.lsdropdown').not($keepOpen).lsdropdown('close'); 
     };
     /**
-     * The number of existing ui.Dropdown instances
-     * @property count
-     * @type {Number}
+     * Get the name of the class
+     * @method getName
+     * @static
+     * @returns {String}
+     */
+    ui.Dropdown.getName = function ( ) {
+        return 'Dropdown';
+    };
+    /**
+     * Pointers to all existing dropdown instances
+     * @property instances
+     * @type {Array}
      * @static
      */
-    ui.Dropdown.count = 0;
+    ui.Dropdown.instances = [ ];
     ui.Dropdown.defaults = {
         /**
          * The function that is called in order to close the dropbox
@@ -111,6 +103,39 @@ define([ 'jquery', 'ls/ui' ], function ( $, ui ) {
         }
     };
     ui.Dropdown.prototype = {
+        /**
+         * Add dropdown behaviors and configure.
+         * @method init
+         * @params {Object} [options]
+         */
+        init: function ( options ) {
+            var lsdropdown = this,
+                $lsdropdown = lsdropdown._$el,
+                settings = lsdropdown._settings,
+                $menu;
+
+            $.extend(settings, options); 
+            lsdropdown._$menu = $menu = $lsdropdown.next().addClass('lsdropdown-menu');
+            /**
+             * When the dropdown receives a click it will close all other dropdowns and toggle its state.
+             * @event click.dropdown
+             */
+            $lsdropdown.on('click.lsdropdown', function ( e ) {
+                var $this = $(this);
+
+                e.stopImmediatePropagation();
+                if ( $this.is('.disabled, :disabled') ) {
+                    return false;
+                }
+                ui.Dropdown.closeDropdowns($lsdropdown);
+                if ( $menu.hasClass('open') ) {
+                    settings.close(lsdropdown);
+                } else {
+                    settings.open(lsdropdown);
+                }
+                return false;
+            });
+        },
         /**
          * Open the dropdown menu
          * @method open

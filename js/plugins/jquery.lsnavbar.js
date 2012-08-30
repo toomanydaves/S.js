@@ -1,113 +1,73 @@
-/* *********************************************************************************************************************
-PLUGIN lsnavbar
-    @description: A navbar is a generic UI component for presenting navigations options in a bar across the screen.
-    @methods:
-        - init
-            @params
-            @description
-        - remove
-            @params
-            @description
-    @events:
-********************************************************************************************************************* */
-!function ($) {
-	var api,
-	    defaults,
-        validate,
-	    plugin;
-
-    api = {
-    	init: function ( options, i18n ) { plugin.init(this, options, i18n); },
-    	remove: function ( ) { plugin.remove(); } 
-    }; 
-    defaults = {
-    };
-    validate = function ( $el, args ) {
-        var error;
-
-        if ( $el.length !== 1 || !($el[0] instanceof HTMLElement) ) {
-            error = 'lsmenu must be called on one element';
-        } else
-        if ( typeof args !== 'object' || !(typeof api[args[0]] === 'function') ) {
-            error = 'lsmenu can only be called with an array, ' + 
-                'the first item of which matches the name of a plugin method.';
-        } else
-        if ( args[0] === 'init' && $el.is('.lsmenu') ) {
-            error = 'lsmenu.init cannot be called on an already initialized lsmenu';
-        } else 
-        if ( args[0] === 'init' && $('.lsmenu').length ) {
-            error = 'lsmenu init cannot be called when there are existing lsmenus';
-        } else 
-        if ( args[0] !== 'init' &&  !($el.is('.lsmenu')) ) {
-            error = 'lsmenu methods, aside from init, must be called on an initialized lsmenu';
-        }
-        return error;
-    };
-    plugin = {
-        // PRIVATE VARIABLES
-        $el: null,
-        settings: null,
-        i18n: null,
-        // PRIVATE METHODS
-    	init: function ( $el, options, i18n ) {
-            this.$el       = $el;
-    		this.settings  = $.extend({ }, defaults, options);
-    		this.i18n      = i18n;
-    		this.$el.addClass('lsnavbar');
-            this.initLeft();
-            this.initRight();
-    	}, 
-        initLeft: function ( ) {
-            this.initHome();
-            this.addDivider();
-            this.initDomain();
-            this.addDivider();
-            this.initActions();
-        },
-        initHome: function ( ) {
-            // code.
-        },
-        addDivider: function ( ) {
-            // code.
-        },
-        initDomain: function () {
-            // code.
-        },
-        initActions: function () {
-            // code.
-        },
-        initRight: function ( ) {
-            this.initProfile();
-            this.addDivider();
-            this.initHelp();
-        },
-        initProfile: function ( ) {
-            // code.
-        },
-        initHelp: function ( ) {
-            // code.
-        },
-    	remove: function ( ) {
-    		this.settings = null;
-    		this.$el.empty().removeClass('lsnavbar');
-    		this.$el = null;
-    	} 
-    };
-/* =================================================================================================================
-   PLUGIN DEFINITION
-   Make the API reachable via a plugin on the jquery prototype.
-   ================================================================================================================= */
+define([ 'jquery', 'ls/ui/Navbar' ], function ( $, Navbar ) {
+    /*
+     * @plugin lsnavbar
+     * @wrap ls.ui.Navbar
+     */
     $.fn.lsnavbar = function ( args ) {
-    	var error;
+        var request = $.fn.lsnavbar.getRequest(this, args);
 
-        // Validate before calling the API.
-        error = validate(this, args);
-        if ( !error ) {
-            api[args.shift()].call(this, args);
-        } else {
-        	$.error(error);
-        }
-        // Return the jquery object to allow chaining.
-        return this;
+        return this.each(function ( index ) {
+            var $this = $(this),
+                navbar;
+
+            if ( !request.errors[index] ) {
+                if ( request.method === 'init' ) {
+                    $this.data('lsnavbar', new Navbar($this, request.args)).addClass('lsnavbar');
+                }
+                else {
+                    navbar = $this.data('lsnavbar');
+                    navbar[request.method].apply(navbar, request.args);
+                }
+            }
+            else {
+                $.error(request.errors[index]);
+            }
+        });
     };
-}(window.jQuery);
+    $.fn.lsnavbar.getRequest = function ( $targets, args ) {
+        var request = { method: '', args: null, errors: [ ] };
+        // Retrieve the requested method and passed arguments.
+        if ( !args ) {
+            request.method = 'init';
+        } else 
+        if ( typeof args === 'string' ) {
+            request.method = args;
+        } else
+        if ( typeof args === 'object' ) {
+            if ( Object.prototype.toString.call(args) === '[object Array]' ) {
+                request.method = args.shift();
+                if ( request.method === 'init' ) {
+                    request.args = args.shift();
+                } else {
+                    request.args = args;
+                }
+            } else {
+                request.method = 'init';
+                request.args   = args;
+            }
+        }
+        // Determine if there are any errors for each target element. 
+        $targets.each(function ( ) {
+            var errors = [ ],
+                navbar = $(this).data('lsnavbar');
+            
+            if ( request.method === 'init' ) {
+                if ( lsnavbar ) {
+                    errors.push('lsnavbar init() cannot be called on an already initialized lsnavbar.');
+                }
+            } else {
+                if ( !navbar[request.method] ) {
+                    errors.push('lsnavbar cannot match the request to a known method.');
+                } 
+                if ( request.method.charAt(0) === '_' ) {
+                    errors.push('lsnavbar is not allowed to call a private method of ls.ui.Navbar');
+                }
+                if ( !lsdropdown ) {
+                    errors.push('lsnavbar methods, aside from init, must be called on an initialized lsnavbar.'); 
+                }
+            }
+            errors.length ? request.errors.push(errors.join(' ')) : request.errors.push(null);
+        });
+        return request; 
+    };
+});
