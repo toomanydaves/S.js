@@ -100,15 +100,15 @@ define([ 'jquery', 'app/App' ], function ( $, App ) {
             }
             // Add an title offscreen with a fixed width, ...
             $title = $('<div class="' + name + '-title">' + title + '</div>')
-                .appendTo($el).css({ left: $(window).width(), width: $(window).width() });
+                .appendTo($el).css({ fontStyle: 'italic', left: $(window).width(), width: $(window).width() });
             // ... animate into position...
             $title.animate(
                 { left: left },
                 settings.duration,
                 'swing',
                 function ( ) {
-                    // ... and reset the width.
-                    $title.css('width', 'auto');
+                    // ... and reset the width and the style.
+                    $title.css({ fontStyle: 'normal', width: 'auto' });
                     if ( typeof callback === 'function' ) {
                         if ( waitFor && typeof waitFor.responses === 'number' ) {
                             waitFor.responses--;
@@ -209,7 +209,7 @@ define([ 'jquery', 'app/App' ], function ( $, App ) {
          * @static
          * @default '/images/app/path.pointer.png'
          */
-        pointerPng: '/images/app/path.pointer.png',
+        pointerPng: '/media/images/app/path.pointer.png',
         /**
          * The padding to insert between titles
          * @attribute titlePadding
