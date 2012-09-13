@@ -58,9 +58,7 @@ define (
                 $.extend(settings, options);
                 // Pass a function as the second parameter to the function, which will be called on the window's
                 // onpopstate event to update the state of the app.
-                app._history = new History(settings.historyApi, function ( e ) {
-                    console.log('window.onpopstate', e);
-                });
+                app._history = new History(settings.historyApi, settings.onpopstate);
                 app._$el = $el.addClass('app').data('app', app);
                 App.addInstance(app);
             },
@@ -179,7 +177,15 @@ define (
              * @attribute {String} historyApi
              * @default 'HTML5'
              */
-            historyApi: 'HTML5'
+            historyApi: 'HTML5',
+            /**
+             * the function to run when window.onpopstate is triggered
+             * @attribute {Function} onpopstate
+             * @default function ( e ) { console.log('onpopstate', e); }
+             */
+            onpopstate: function ( e ) {
+                console.log('onpopstate', e);
+            }
         };
         /**
          * a namespaced map of constants used to identify types of events
