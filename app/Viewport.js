@@ -291,6 +291,13 @@ define([ 'jquery', 'utilities/step', 'app/App' ], function ( $, step, App ) {
          */
         duration: 1000,
         /**
+         * the path to the gif to display for the loading animation
+         * @attribute loadingGif
+         * @type {String}
+         * @default '/media/images/app/viewport.loading.gif'
+         */
+        loadingGif: '/media/images/app/viewport.loading.gif',
+        /**
          * The margin to add around a screen 
          * @attribute screenMargin
          * @type {Number}
