@@ -29,7 +29,7 @@ define (
              */
             this._loadedStates = [ ];
             /**
-             * way of  managing states in the browser's history
+             * interface to the browser's history
              * @property app.History _history
              * @private
              */
@@ -56,7 +56,11 @@ define (
                     settings = app._settings;
 
                 $.extend(settings, options);
-                app._history = new History(settings.historyApi);
+                // Pass a function as the second parameter to the function, which will be called on the window's
+                // onpopstate event to update the state of the app.
+                app._history = new History(settings.historyApi, function ( e ) {
+                    console.log('window.onpopstate', e);
+                });
                 app._$el = $el.addClass('app').data('app', app);
                 App.addInstance(app);
             },

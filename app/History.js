@@ -9,7 +9,7 @@ define([ 'utilities/classify' ], function ( classify ) {
 			};
 		}
 	};
-	classify(History, 'History', 'sjs.app');
+	classify(History, 'History', 'app');
 	History.prototype = {
 		pushState: function ( state ) {
 			if ( this.supportedApis.indexOf('HTML5') >= 0 ) {
