@@ -36,16 +36,60 @@ define([ 'jquery', 'app/App' ], function ( $, App ) {
                 );
             }
         },
-        getInitiators: function ( ) {
-            return $.extend({ }, this._initiators);
+        // Implement the responder interface.
+        respondToNotification: function ( notification, waitFor, callback ) {
+            var path = this,
+                initiator = notification.initiator,
+                initiators = path._initiators,
+                respondsToInitiator = (
+                    initiator && initiators.length ?  
+                    ( initiators.indexOf(notification.initiator) >= 0 ) :
+                    false
+                ),
+                requiresResponse = typeof callback === 'function',
+                title,
+                response;
+
+            if ( respondsToInitiator ) {
+                if ( initiator === App.getName() ) {
+                    response = App.events.initiator.PROCEED;
+                    switch ( notification.type ) {
+                        case App.events.app.PUSH_STATE:
+                            title = notification.content.title;
+                            if ( typeof title !== 'string' ) {
+                                throw('Path requires a string value for the title property of the notification content');
+                            }
+                            path._push(notification.content.title, waitFor, callback);
+                            response = App.events.initiator.WAIT;
+                            break;
+                        case App.events.app.POP_STATE:
+                            path._pop(waitFor, callback);
+                            response = App.events.initiator.WAIT;
+                            break;
+                        case App.events.app.ACTIVATE:
+                            path._activate();
+                            response = App.events.initiator.PROCEED;
+                            break;
+                        case App.events.app.DEACTIVATE:
+                            path._deactivate();
+                            response = App.events.initiator.PROCEED;
+                            break;
+                        default:
+                            throw('Path does not recognize app event');
+                    }
+                } 
+                return requiresResponse ? response : null;
+             } else {
+                throw('Path does not recognize initiator');
+            }
         },
-        // TODO once done testing, make these methods private, only reachable through respondToNotification
         /**
          * When the path is activated, the last title becomes active and the pointer is placed underneath it.
          * All others become clickable.
-         * @method activate
+         * @method _activate
+         * @private
          */
-        activate: function ( ) {
+        _activate: function ( ) {
             var path = this,
                 name = Path.getName().toLowerCase(),
                 $el = path._$el,
@@ -71,14 +115,23 @@ define([ 'jquery', 'app/App' ], function ( $, App ) {
             }
         },
         /**
-         * When the path is in transition, deactive the active level and hide the pointer.
-         * @method deactivate
+         * When the path is in transition, deactive the active title and hide the pointer.
+         * @method _deactivate
+         * @private
          */
-        deactivate: function ( ) {
+        _deactivate: function ( ) {
             $('#' + Path.getName().toLowerCase() + '-title-active', this._$el).removeAttr('id');
             this._$pointer.css('left', -9999); 
         },
-        push: function ( title, waitFor, callback ) {
+        /**
+         * Push a new title onto the path.
+         * @method _push
+         * @private
+         * @param {String} title The title that should appear in the path
+         * @param {Object} [waitFor] A pointer to an object with a responses property
+         * @param {Function} [callback] A function to call after the entry has been added to the path
+         */
+        _push: function ( title, waitFor, callback ) {
             var path = this,
                 $el = path._$el,
                 name = Path.getName().toLowerCase(),
@@ -100,30 +153,69 @@ define([ 'jquery', 'app/App' ], function ( $, App ) {
             }
             // Add an title offscreen with a fixed width, ...
             $title = $('<div class="' + name + '-title">' + title + '</div>')
-                .appendTo($el).css({ fontStyle: 'italic', left: $(window).width(), width: $(window).width() });
+                .appendTo($el).css({ left: $(window).width(), width: $(window).width() });
             // ... animate into position...
             $title.animate(
                 { left: left },
                 settings.duration,
                 'swing',
                 function ( ) {
-                    // ... and reset the width and the style.
-                    $title.css({ fontStyle: 'normal', width: 'auto' });
+                    // ... and reset the width.
+                    $title.css('width', 'auto');
                     if ( typeof callback === 'function' ) {
-                        if ( waitFor && typeof waitFor.responses === 'number' ) {
+                        if ( 
+                            waitFor && 
+                            typeof waitFor.responses === 'number' &&
+                            waitFor.responses > 0
+                        ) {
                             waitFor.responses--;
                             if ( !waitFor.responses ) {
                                 callback();
                             }
                         } else {
-                            callback();
+                            throw('Path was not apble to parse waitFor object to run callback on push.');
                         }
                     }
                 }
             );
         },
-        pop: function ( waitFor, callback ) {
-
+        /**
+         * Pop the top title off the path.
+         * @method _pop
+         * @private
+         * @param {Object} [waitFor] A pointer to an object with a responses property
+         * @param {Function} [callback] A function to call after the title has been removed from the path
+         */
+        _pop: function ( waitFor, callback ) {
+            var path = this,
+                name = Path.getName().toLowerCase(),
+                $lastTitle = $('.' + name + '-title', this._$el).filter(':last');
+                
+            // Delete the last divider. 
+            $('.' + name + '-divider', this._$el).filter(':last').remove();
+            // Set the width of the entry to prevent it from collapsing when it nears the end of the browser window
+            $lastTitle.css('font-style', 'italic').width($(window).width()).animate(
+                { left: $(window).width() },
+                path._settings.duration,
+                'swing',
+                function ( ) {
+                    $lastTitle.remove();
+                    if ( typeof callback === 'function' ) {
+                        if ( 
+                            waitFor &&
+                            typeof waitFor.responses === 'number' &&
+                            waitFor.responses > 0
+                        ) {
+                            waitFor.responses--;
+                            if ( !waitFor.responses ) {
+                                callback();
+                            }
+                        } else {
+                            throw('Path was not able to parse waitFor object to run callback on pop.');
+                        }
+                    }
+                }
+            );
         },
         // Implement the instance methods of the jQueryPlugin interface.
         init: function ( $el, options ) {
@@ -143,44 +235,7 @@ define([ 'jquery', 'app/App' ], function ( $, App ) {
                 $el.remove();
             }
             Path._removeInstance(this);
-        },
-        // Implement the responder interface.
-        respondToNotification: function ( notification, waitFor, callback ) {
-            var path = this,
-                initiator = notification.initiator,
-                initiators = path._initiators,
-                respondsToInitiator = (
-                    initiator && initiators.length ?  
-                    ( initiators.indexOf(notification.initiator) >= 0 ) :
-                    false
-                ),
-                requiresResponse = typeof callback === 'function',
-                title,
-                response;
-
-            if ( respondsToInitiator ) {
-                if ( initiator === App.getName() ) {
-                    response = App.events.initiator.PROCEED;
-                    switch ( notification.type ) {
-                        case App.events.app.PUSH_STATE:
-                            title = notification.content.title;
-                            if ( typeof title !== 'string' ) {
-                                // TODO throw exception
-                            }
-                            path.push(notification.content.title, waitFor, callback);
-                            response = App.events.initiator.WAIT;
-                            break;
-                        case App.events.app.POP_STATE:
-                            //TODO respond to pop state
-                            break;
-                        default:
-                            // TODO throw an exception
-                            break;
-                    }
-                } 
-                return requiresResponse ? response : null;
-             }
-         }
+        }
     };
     // Inplement static methods of the jQueryPlugin interface and classify Path().
     classify(Path, 'Path', 'view.Path');

@@ -27,13 +27,11 @@ define(
                     name;
                 // Validate first.
                 if ( problemsWithBaseClass ) {
-                    $.error(problemsWithBaseClass);
-                    return;
+                    throw(problemsWithBaseClass);
                 }
                 name = BaseClass.getName().toLowerCase();
                 if ( $.fn[name] ) {
-                    $.error(name + ' already exists.');
-                    return;
+                    throw(name + ' already exists.');
                 }
                 // Add the plugin function to the jQuery prototype object.
                 $.fn[name] = function ( ) {

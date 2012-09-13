@@ -1,3 +1,3 @@
 define([ 'utilities/pluginFactory', 'app/Path' ], function ( pluginFactory, Path ) {
-    return pluginFactory.newJQueryPlugin(Path);
+    return pluginFactory.newJQueryPlugin(Path, true);
 });

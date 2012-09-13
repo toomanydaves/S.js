@@ -147,13 +147,13 @@ define (
              * @method popState
              */
             popState: function ( callback ) {
-                var state = app.getCurrentState(),
+                var app = this,
+                    state = app.getCurrentState(),
                     notification = { 
                         initiator: App.getName(), 
-                        type: App.events.POP_STATE,
+                        type: App.events.app.POP_STATE,
                         content: state
-                    },
-                    app = this;
+                    };
 
                 if ( !state ) {
                     throw 'Cannot popState() when none are loaded.';
