@@ -248,7 +248,7 @@ define([ 'jquery', 'app/App' ], function ( $, App ) {
          * @static
          * @default 300(ms)
          */
-        delay: 300,
+        delay: 2000,
         /**
          * The duration for a title to animate into/out of position
          * @attribute duration

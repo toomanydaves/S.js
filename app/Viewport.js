@@ -281,7 +281,7 @@ define([ 'jquery', 'utilities/step', 'app/App' ], function ( $, step, App ) {
          * @static
          * @default 300(ms)
          */
-        delay: 300,
+        delay: 2000,
         /**
          * The duration for a screen to animate into/out of position
          * @attribute duration
