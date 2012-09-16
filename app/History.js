@@ -1,4 +1,4 @@
-define([ 'utilities/classify' ], function ( classify ) {
+define([ 'utils/classify' ], function ( classify ) {
 	History = function ( supportedApis, popStateHandler ) {
 		this.supportedApis = supportedApis.split(' ');
 		if ( this.supportedApis.indexOf('HTML5') >= 0 ) {

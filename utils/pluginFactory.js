@@ -1,7 +1,7 @@
 define(
     [
         'jquery', 
-        'utilities/checkImplementation',
+        'utils/checkImplementation',
         'interfaces/jQueryPlugin'
     ],
     function ( $, checkImplementation, jQueryPlugin ) {

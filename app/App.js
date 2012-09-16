@@ -3,10 +3,10 @@ define (
         'jquery', 
         'libs/underscore',
         'app/History',
-        'utilities/classify', 
-        'utilities/mixin',
+        'utils/classify', 
+        'utils/mixin',
         'mixins/initiator',
-        'utilities/checkImplementation',
+        'utils/checkImplementation',
         'interfaces/state'
     ], 
     function ( $, _, History, classify, mixin, initiator, checkImplementation, stateInterface ) {

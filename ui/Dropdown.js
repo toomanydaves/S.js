@@ -1,4 +1,4 @@
-define([ 'jquery', 'utilities/classify' ], function ( $, classify ) {
+define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
     /**
      * Dropdown is a solution for showing and hiding a set of options for the user to choose from.
      * @class Dropdown
