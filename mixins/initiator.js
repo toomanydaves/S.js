@@ -1,5 +1,5 @@
 define(
-    [ 'utilities/checkImplementation', 'interfaces/responder' ], 
+    [ 'utils/checkImplementation', 'interfaces/responder' ], 
     function ( checkImplemetation, responderInterface ) {
         return {
             staticProperties: {
