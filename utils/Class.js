@@ -1,11 +1,10 @@
-define([ 'jquery' ], function ( $ ) {
-	// AMD: return the constructor for use as a parameter when calling define/require
+define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
 	/**
 	 * @class Class
 	 * @constructor
 	 * @param {Object} [_] key-value mapping for defining private instance varialbles
 	 */
-	return function ( _ ) {
+	var Class =  function ( _ ) {
 		/**
          * call a private method of the instance
 		 * @method _call
@@ -72,4 +71,16 @@ define([ 'jquery' ], function ( $ ) {
             }
         };
     };
+
+    Class.prototype = { };
+    Class.prototype.init = function ( ) {
+       Class.addInstance(this);
+    };
+    Class.prototype.remove = function ( ) {
+        Class.removeInstance(this);
+    }; 
+    Class.prototype.constructor = Class;
+    classify(Class, 'Class', 'util');
+	// AMD: return the constructor for use as a parameter when calling define/require
+	return Class;
 });

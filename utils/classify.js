@@ -10,7 +10,7 @@ define([ ], function ( ) {
          * @param {Object} instance
          * @private
          */
-        Constructor._removeInstance = function ( instance ) {
+        Constructor.removeInstance = function ( instance ) {
             var instances = this._instances,
                 index = instances.indexOf(instance);
 

@@ -11,8 +11,8 @@ define (
         'interfaces/state'
     ], 
     function ( $, _, History, Class, classify, mixin, initiator, checkImplementation, stateInterface ) {
-            // Create an instance of the super class for inheritance.
-        var superClass = new Class(),
+            // Create an instance of Class for inheritance.
+        var parent = new Class(),
             // Create the constructor function.
             /**
              * A solution for managing the state of the application running on the client.
@@ -128,45 +128,55 @@ define (
                     }
                 };
 
-                // Call the super class' constructor passing the reference to the private, instance properties.
-                superClass.constructor.call(this, _);
+                // Call the parent object's constructor passing a reference to the local variable containing the private 
+                // properties to be added to the instance.
+                parent.constructor.call(this, _);
                 // Set the constructor property on the instance to the constructor function.
                 this.constructor = App;
+                // Create privileged methods.
+                /**
+                 * initialize and configure the app
+                 * @method init
+                 * @privileged
+                 * @param {Object} $el a jQuery set containing the element to use as the container for the app • unless 
+                 * there is a good reason not to, the body element should be used
+                 * @param {Object} [options] a configuration object to override the default settings
+                 */
+                this.init = function ( $el, options ) {
+                    var app = this,
+                        settings; 
+
+                    // Call the method on the parent.
+                    parent.init.apply(this, arguments);
+                    // Initialize private, instance variables. 
+                    settings = app._get('settings');
+                    app._set('settings', $.extend(settings, App.defaults, options));
+                    app._set('history', new History(settings.historyApi, settings.onpopstate));
+                    app._set('$el', $el.addClass('app').data('app', app));
+                    // Add a reference to the instance on the constructor.
+                    App.addInstance(app);
+                };
+                /**
+                 * remove all traces of the app
+                 * @method remove
+                 * @privileged
+                 */
+                this.remove = function ( ) {
+                    var $el = this._get('$el');
+
+                    // Call the method on the parent.
+                    parent.remove.apply(this, arguments);
+                    // Remove DOM elements and events.
+                    if ( $el && $el.length ) {
+                        $el.empty().remove();
+                    }
+                    // Delete the reference to the instance on the constructor.
+                    App.removeInstance(this);
+                };
             };
-        // Use the instance of the super class as the prototype for the constructor function to establish inheritance.
-        App.prototype = superClass; 
-        // Add public, instance methods onto the prototype.
-        /**
-         * initialize and configure the app
-         * @method init
-         * @param {Object} $el a jQuery set containing the element to use as the container for the app • unless 
-         * there is a good reason not to, the body of the page should be used
-         * @param {String} name the name to use to identify the app
-         * @param {Object} [options] a configuration object to override the default settings
-         */
-        App.prototype.init = function ( $el, options ) {
-            var app = this,
-                settings = $.extend(app._get('settings'), App.defaults);
-
-            $.extend(settings, options);
-            // Pass a function as the second parameter to the function, which will be called on the window's
-            // onpopstate event to update the state of the app.
-            app._set('history', new History(settings.historyApi, settings.onpopstate));
-            app._set('$el', $el.addClass('app').data('app', app));
-            App.addInstance(app);
-        };
-        /**
-         * cleanly remove all traces of the app
-         * @method remove
-         */
-        App.prototype.remove = function ( ) {
-            var $el = this._get('$el');
-
-            if ( $el && $el.length ) {
-                $el.empty().remove();
-            }
-            App._removeInstance(this);
-        };
+        // Use the parent object as the prototype for the constructor function to establish inheritance.
+        App.prototype = parent; 
+        // Extend the prototype to add new public methods to instances of the class.
         /**
          * The states passed to the method will be compared with those currently loaded until a point of 
          * diversion is found. From that point on all existing states will be removed and any new states 
@@ -268,6 +278,13 @@ define (
             }
             return currentState;
         };
+        // Extend the constructor function to add static properties and methods.
+        /**
+         * default config for all app instances
+         * @property defaults map of property-values
+         * @type {Object}
+         * @static
+         */
         App.defaults = {
             /**
              * a space-delimited list of the types of History APIs to support • currently only HTML5 supported
@@ -285,8 +302,9 @@ define (
             }
         };
         /**
-         * a namespaced map of constants used to identify types of events
-         * @property {Object} events
+         * a map of class names to objects containing constant names and values used to identify types of events
+         * @property events
+         * @type {Object}
          * @static
          */
         App.events = {
@@ -298,9 +316,10 @@ define (
             }
         };
         // Add standard class properties to App().
-        classify(App, 'App', 'sjs.app');
+        classify(App, 'App', 'app');
         // Merge initiator mixin with App().
         mixin(initiator, App, true);
+        // AMD: return the constructor for use as a parameter when calling define/require
         return App;
     }
 );
