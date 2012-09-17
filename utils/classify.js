@@ -94,8 +94,6 @@ define([ ], function ( ) {
          * @static
          */
         Constructor._instances = [ ];
-        // Create link back to the constructor from the prototype.
-        Constructor.prototype.constructor = Constructor;
         /**
          * flag indicating that the class has class properties
          * @property {Boolean} hasClassProperties

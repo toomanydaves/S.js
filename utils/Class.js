@@ -19,10 +19,10 @@ define([ 'jquery' ], function ( $ ) {
             if ( typeof _[method] === 'function' ) {
                 caller = 'call' + method.charAt(0).toUpperCase() + method.slice(1);
                 if ( typeof _[caller] === 'function' ) {
-                    _[caller].call(this, arguments);
+                    _[caller].apply(this, arguments);
                 } else {
                     args = $.makeArray(arguments);
-                    _[args.shift()].call(this, args);
+                    _[args.shift()].apply(this, args);
                 }
             } else {
                 throw('No such method.');
@@ -40,7 +40,7 @@ define([ 'jquery' ], function ( $ ) {
 
             if ( typeof _[property] !== 'undefined' ) {
                 getter = 'get' + property.charAt(0).toUpperCase() + property.slice(1);
-                if ( typeof _[getter] === function ) {
+                if ( typeof _[getter] === 'function' ) {
                     return _[getter]();
                 } else {
                     return _[property];
@@ -61,7 +61,7 @@ define([ 'jquery' ], function ( $ ) {
 
             if ( typeof _[property] !== 'undefined' ) {
                 setter = 'set' + property.charAt(0).toUpperCase() + property.slice(1);
-                if ( typeof _[setter] === function ) {
+                if ( typeof _[setter] === 'function' ) {
                     _[setter](value);
                 } else {
                     _[property] = value;

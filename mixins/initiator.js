@@ -34,7 +34,7 @@ define(
                 		throw('Responder could not be identified, and thus, not removed.');
                 	}
                 },
-                _notifyResponders: function ( 
+                notifyResponders: function ( 
                     notification, 
                     callback, 
                     timeLimit, 
