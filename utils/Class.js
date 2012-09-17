@@ -7,6 +7,7 @@ define([ 'jquery' ], function ( $ ) {
 	 */
 	return function ( _ ) {
 		/**
+         * call a private method of the instance
 		 * @method _call
 		 * @private
 		 * @param {String} method the name of a private instance method to call
@@ -28,6 +29,7 @@ define([ 'jquery' ], function ( $ ) {
             }
         };
         /**
+         * get the value of a private property of the instance
          * @method _get
          * @private
          * @param {String} property the name of the property whose value should be returned
@@ -48,6 +50,7 @@ define([ 'jquery' ], function ( $ ) {
             }
         };
         /**
+         * set the value of a private property of the instance
          * @method _set
          * @private
          * @param {String} property the name of the property whose value should be set
