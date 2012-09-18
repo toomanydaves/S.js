@@ -1,4 +1,4 @@
-define([ 'jquery', 'views/ViewClass' ], function ( $, View ) {
+define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
     var parent = new ViewClass(),
         /**
          * a class of views for showing an index of other views.
