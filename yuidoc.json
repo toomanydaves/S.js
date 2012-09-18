@@ -1,9 +1,0 @@
-{
-    "name": "LearnShip JS API",
-    "version": "0.0.1",
-    "logo": "/images/api/logo.png",
-    "options": {
-        "outdir": "api",
-        "linkNatives": "true"
-    }
-}
