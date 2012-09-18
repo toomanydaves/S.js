@@ -1,4 +1,8 @@
 define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
+	/* 
+	Enable access to the properties of the parent class within the constructor by binding what will become its 
+	eventual prototype to a local variable. 
+	*/
     var parent = new Class(),
         /**
          * @class ViewClass a base class for views
@@ -8,10 +12,11 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
          * @constructor
          */
         View = function ( _ ) {
-            // Use the properties of a local variable to define private variables for the instance, while incorporating
-            // any non-conflicting private properties passed from classes extending View.
+            /* 
+            Use an object to define private, instance properties, while incorporating any non-conflicting private 
+            property wishes, passed in the form of a parameter to the constructor, from child classes.
+            */
             var _ = $.extend(true, _, {
-                // Define private properties for the instance.
                 /**
                  * @property title the title of the view
                  * @private
@@ -43,16 +48,26 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
                  */
                 $el: null
             });
-
-            // Call the parent object's constructor with a reference to the local variable defining the private 
-            // properties to be added to the instance.
+            /*
+            Call the parent object's constructor passing the private properties to be added to the instance.
+            */
             parent.constructor.call(this, _);
-            // Set the constructor property on the instance to the constructor function.
+            /* 
+            Extend the instance with properties unique to the class. These will override any such properties of parent 
+            classes and may be overridden by other classes inheriting from the constructor.
+            
+            To best deal with these eventualities, make expectations clear as possible: If the assumption is that 
+            the property doesn't exist on a parent class - which should typically be the case for all properties aside
+            from functions - then an exception should be thrown when it does; in the case of functions, when they do 
+            exist, it is recommended that parent functions be called before anything else in functions that override 
+            them; strings and arrays may be concatenated; objects extended; numbers added together; etc.
+            */
+            /* 
+            Set the constructor property on the instance to the constructor function to enable future inheritance.
+            */.
             this.constructor = View;
-            // Create privileged methods.
             /**
-             * initialize and configure
-             * @method init
+             * @method init initialize and configure
              * @privileged
              * @param {Object} $el a jQuery set containing the element to use as the container for the view
              * @param {Object} [options] a configuration object to override the default settings
@@ -74,8 +89,7 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
                 View.addInstance(view);
             };
             /**
-             * remove all traces of the instance
-             * @method remove
+             * @method remove remove all traces of the instance
              * @privileged
              */
             this.remove = function ( ) {
@@ -94,11 +108,18 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
                 View.removeInstance(this);
             };
         };
-    // Use the parent object as the prototype for the constructor function to establish inheritance.
+    /*
+    Use the parent object as the prototype for the constructor function to establish inheritance.
+    */
     View.prototype = parent; 
-    // Extend the prototype to add new public methods to instances of the class.
+    /*
+    Extend the prototype to add new public methods to instances of the class. These will not be able to call parent 
+    methods they override.
+    */
     // TODO
-    // Extend the constructor function to add static properties and methods.
+    /* 
+    Extend the constructor function to add static properties and methods.
+    */
     /**
      * default config for all instances
      * @property defaults map of property-values
