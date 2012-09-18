@@ -1,9 +1,10 @@
-define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
-    var parent = new Class(),
+define([ 'jquery', 'views/ViewClass' ], function ( $, View ) {
+    var parent = new ViewClass(),
         /**
-         * A view for showing an index of other views.
-         * @class Index 
+         * a class of views for showing an index of other views.
+         * @class IndexViewClass 
          * @namespace view
+         * @extends views.ViewClass
          * @constructor
          */
         Index = function ( ) {

@@ -1,24 +1,48 @@
 define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
     var parent = new Class(),
         /**
-         * a base class for views, inherits from Class
-         * @class View 
+         * @class ViewClass a base class for views
          * @namespace view
-         * @extends Class
+         * @extends utils.Class
+         * @param {Object} [_] A map of name-value pairs to add as private properties for the instance.
          * @constructor
          */
-        View = function ( ) {
-            // Use the properties of a local variable to define private variables for the instance.
-            var _ = {
+        View = function ( _ ) {
+            // Use the properties of a local variable to define private variables for the instance, while incorporating
+            // any non-conflicting private properties passed from classes extending View.
+            var _ = $.extend(true, _, {
                 // Define private properties for the instance.
                 /**
-                 * the jQuery set consisting of the element that is the container for the view
-                 * @property $el
+                 * @property title the title of the view
+                 * @private
+                 * @type {String}
+                 */
+                title: null,
+                /**
+                 * @property description a description of the view
+                 * @private
+                 * @type {Array} A collection of the lines of text describing the view
+                 */
+                description: [ ],
+                /**
+                 * @property url the url to call to get the view
+                 * @private
+                 * @type {String}
+                 */
+                url: null,
+                /**
+                 * @property data a map of properties to pass along with the url when requesting the view
+                 * @private
+                 * @type {Object}
+                 */
+                data: { },
+                /**
+                 * @property $el the jQuery set consisting of the element that is the container for the view
                  * @type {Object}
                  * @private
                  */
                 $el: null
-            };
+            });
 
             // Call the parent object's constructor with a reference to the local variable defining the private 
             // properties to be added to the instance.
@@ -37,14 +61,17 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
                 var view = this,
                     settings; 
 
-                // Call the method on the parent.
-                parent.init.apply(this, arguments);
+                // If it exists...
+                if ( typeof parent.init === 'function' ) {
+                    // ... call the method on the parent.
+                    parent.init.apply(this, arguments);
+                }
                 // Initialize private, instance variables. 
                 settings = view._get('settings');
-                view._set('settings', $.extend(settings, App.defaults, options));
+                view._set('settings', $.extend(settings, View.defaults, options));
                 view._set('$el', $el.addClass('view').data('view', view));
                 // Add a reference to the instance on the constructor.
-                View.addInstance(index);
+                View.addInstance(view);
             };
             /**
              * remove all traces of the instance
@@ -54,9 +81,12 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
             this.remove = function ( ) {
                 var $el = this._get('$el');
 
-                // Call the method on the parent.
-                parent.remove.apply(this, arguments);
-                // Remove DOM elements and events.
+                // If it exists...
+                if ( typeof parent.remove === 'function' ) {
+                    // ... call the method on the parent.
+                    parent.remove.apply(this, arguments);
+                }
+                // Remove any DOM elements and events.
                 if ( $el && $el.length ) {
                     $el.empty().remove();
                 }
@@ -64,14 +94,13 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
                 View.removeInstance(this);
             };
         };
-
     // Use the parent object as the prototype for the constructor function to establish inheritance.
     View.prototype = parent; 
     // Extend the prototype to add new public methods to instances of the class.
     // TODO
     // Extend the constructor function to add static properties and methods.
     /**
-     * default config for all index instances
+     * default config for all instances
      * @property defaults map of property-values
      * @type {Object}
      * @static
