@@ -1,2 +1,18 @@
 .DS_Store
 .swp
+=======
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS specific files #
+#####################
+.DS_Store
+.DS_Store?
+
+# VIM temp files #
+##################
+*~
+.*.sw*

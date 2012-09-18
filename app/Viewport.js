@@ -48,7 +48,7 @@ define([ 'jquery', 'utils/step', 'app/App' ], function ( $, step, App ) {
             if ( $el && $el.length ) {
                 $el.remove();
             }
-            Viewport._removeInstance(this);
+            Viewport.removeInstance(this);
         },
         // Implement the responder interface.
         addInitiator: function ( initiator ) {

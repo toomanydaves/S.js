@@ -234,7 +234,7 @@ define([ 'jquery', 'app/App' ], function ( $, App ) {
             if ( $el && $el.length ) {
                 $el.remove();
             }
-            Path._removeInstance(this);
+            Path.removeInstance(this);
         }
     };
     // Inplement static methods of the jQueryPlugin interface and classify Path().

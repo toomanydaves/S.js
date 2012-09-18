@@ -1,12 +1,12 @@
-define([ 'jquery' ], function ( $ ) {
-	// AMD: return the constructor for use as a parameter when calling define/require
+define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
 	/**
 	 * @class Class
 	 * @constructor
 	 * @param {Object} [_] key-value mapping for defining private instance varialbles
 	 */
-	return function ( _ ) {
+	var Class =  function ( _ ) {
 		/**
+         * call a private method of the instance
 		 * @method _call
 		 * @private
 		 * @param {String} method the name of a private instance method to call
@@ -18,16 +18,17 @@ define([ 'jquery' ], function ( $ ) {
             if ( typeof _[method] === 'function' ) {
                 caller = 'call' + method.charAt(0).toUpperCase() + method.slice(1);
                 if ( typeof _[caller] === 'function' ) {
-                    _[caller].call(this, arguments);
+                    _[caller].apply(this, arguments);
                 } else {
                     args = $.makeArray(arguments);
-                    _[args.shift()].call(this, args);
+                    _[args.shift()].apply(this, args);
                 }
             } else {
                 throw('No such method.');
             }
         };
         /**
+         * get the value of a private property of the instance
          * @method _get
          * @private
          * @param {String} property the name of the property whose value should be returned
@@ -38,7 +39,7 @@ define([ 'jquery' ], function ( $ ) {
 
             if ( typeof _[property] !== 'undefined' ) {
                 getter = 'get' + property.charAt(0).toUpperCase() + property.slice(1);
-                if ( typeof _[getter] === function ) {
+                if ( typeof _[getter] === 'function' ) {
                     return _[getter]();
                 } else {
                     return _[property];
@@ -48,6 +49,7 @@ define([ 'jquery' ], function ( $ ) {
             }
         };
         /**
+         * set the value of a private property of the instance
          * @method _set
          * @private
          * @param {String} property the name of the property whose value should be set
@@ -58,7 +60,7 @@ define([ 'jquery' ], function ( $ ) {
 
             if ( typeof _[property] !== 'undefined' ) {
                 setter = 'set' + property.charAt(0).toUpperCase() + property.slice(1);
-                if ( typeof _[setter] === function ) {
+                if ( typeof _[setter] === 'function' ) {
                     _[setter](value);
                 } else {
                     _[property] = value;
@@ -69,4 +71,16 @@ define([ 'jquery' ], function ( $ ) {
             }
         };
     };
+
+    Class.prototype = { };
+    Class.prototype.init = function ( ) {
+       Class.addInstance(this);
+    };
+    Class.prototype.remove = function ( ) {
+        Class.removeInstance(this);
+    }; 
+    Class.prototype.constructor = Class;
+    classify(Class, 'Class', 'util');
+	// AMD: return the constructor for use as a parameter when calling define/require
+	return Class;
 });
