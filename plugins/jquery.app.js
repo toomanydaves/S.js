@@ -1,3 +1,3 @@
-define([ 'utils/pluginFactory', 'app/App' ], function ( pluginFactory, App ) {
-    return pluginFactory.newJQueryPlugin(App, true);
+define([ 'utils/pluginFactory', 'app/AppClass' ], function ( pluginFactory, AppClass ) {
+    return pluginFactory.newJQueryPlugin(AppClass, true);
 });
