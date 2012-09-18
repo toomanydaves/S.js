@@ -10,11 +10,7 @@ define([ ], function ( ) {
          * @param {Object} instance
          * @private
          */
-<<<<<<< HEAD
-        Constructor._removeInstance = function ( instance ) {
-=======
         Constructor.removeInstance = function ( instance ) {
->>>>>>> fd82ded35c391fbfe3b11ccd9d19713c665434b7
             var instances = this._instances,
                 index = instances.indexOf(instance);
 
@@ -98,11 +94,6 @@ define([ ], function ( ) {
          * @static
          */
         Constructor._instances = [ ];
-<<<<<<< HEAD
-        // Create link back to the constructor from the prototype.
-        Constructor.prototype.constructor = Constructor;
-=======
->>>>>>> fd82ded35c391fbfe3b11ccd9d19713c665434b7
         /**
          * flag indicating that the class has class properties
          * @property {Boolean} hasClassProperties
