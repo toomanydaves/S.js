@@ -1,7 +1,7 @@
 define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
     var parent = new Class(),
         /**
-         * A view for showing an index of lists.
+         * A view for showing an index of other views.
          * @class Index 
          * @namespace view
          * @constructor
