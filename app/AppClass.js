@@ -171,7 +171,7 @@ define (
                             // ... and for those with urls and titles...
                             if ( title ) {
                                 // ... replace the states...
-                                // TODO
+                                // does the router bind to the app?
                                 console.log(url + ', ' + title);
                                 // ... and stop the location from changing.
                                 return false;
