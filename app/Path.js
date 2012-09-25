@@ -1,4 +1,4 @@
-define([ 'jquery', 'app/App' ], function ( $, App ) {
+define([ 'jquery', 'app/AppClass' ], function ( $, App ) {
     var Path = function ( ) {
         this._settings = $.extend(true, { }, Path.defaults);
         this._initiators = [ ];
