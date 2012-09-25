@@ -11,198 +11,197 @@ define (
         'interfaces/state'
     ], 
     function ( $, _, History, Class, classify, mixin, initiator, checkImplementation, stateInterface ) {
-            // Create an instance of Class for inheritance.
-        var parent = new Class(),
-            // Create the constructor function.
-            /**
-             * A solution for managing the state of the application running on the client.
-             * @class App
-             * @namespace app
-             * @constructor
-             */
-            App = function ( ) {
-                // Create private, instance variables as properties on a local variable.
-                var _ = {
-                    // Define private instance properties.
-                    /**
-                     * the element that is the container for the app
-                     * @property jQuery _$el
-                     * @private
-                     */
-                    $el: null,
-                    /**
-                     * the current and all related states
-                     * @property {Array} loadedStates
-                     * @private
-                     */
-                    loadedStates: [ ],
-                    /**
-                     * interface to the browser's history
-                     * @property app.History history
-                     * @private
-                     */
-                    history: null,
-                    /**
-                     * the settings for the app
-                     * @property {Object} settings
-                     * @private
-                     */
-                    settings: { },
-                    pushStates: function ( states, callback ) {
-                        var app = this,
-                            state;
-
-                        if ( states.length ) {
-                            state = states.shift();
-                            app._call('pushState', state, function ( ) {
-                                app._call('pushStates', states, callback);
-                            });                         
-                        } else if ( typeof callback === 'function' ) {
-                            callback();
-                        }
-                    },
-                    popStates: function ( howMany, callback ) {
-                        var app = this;
-
-                        if ( howMany ) {
-                            howMany--;
-                            app._call('popState', function ( ) {
-                                app._call('popStates', howMany, callback);
-                            });
-                        } else if ( typeof callback === 'function' ) {
-                            callback();
-                        }
-                    },
-                    /**
-                     * push a new current state on to the loaded states 
-                     * @method _pushState
-                     * @private
-                     * @param {Object} state an object with data, url and title properties
-                     */
-                    pushState: function ( state, callback ) {
-                        var problemsWithState = checkImplementation(state, stateInterface),
-                            app = this,
-                            notification;
-
-                        if ( problemsWithState ) {
-                            throw problemsWithState;
-                        } else {
-                            notification = { 
-                                initiator: App.getName(), 
-                                type: App.events.app.PUSH_STATE, 
-                                content: $.extend(true, { }, state)
-                            };
-                            app.notifyResponders(notification, function ( ) {
-                                app._get('loadedStates').push(state);
-                                if ( typeof callback === 'function' ) {
-                                    callback();
-                                }
-                            });
-                        }
-                    },
-                    /**
-                     * pop the current state from the loaded states
-                     * @method _popState
-                     */
-                    popState: function ( callback ) {
-                        var app = this,
-                            state = app.getCurrentState(),
-                            notification = { 
-                                initiator: App.getName(), 
-                                type: App.events.app.POP_STATE,
-                                content: state
-                            };
-
-                        if ( !state ) {
-                            throw 'Cannot popState() when none are loaded.';
-                        } else {
-                            app.notifyResponders(notification, function ( ) {
-                                app._get('loadedStates').pop();
-                                //TODO selective modify browser state
-                                app._get('history').pushState(state);
-                                if ( typeof callback === 'function' ) {
-                                    callback();
-                                }
-                            });
-                        }
-                    }
-                };
-
-                // Call the parent object's constructor passing a reference to the local variable containing the private 
-                // properties to be added to the instance.
-                parent.constructor.call(this, _);
-                // Set the constructor property on the instance to the constructor function.
-                this.constructor = App;
-                // Create privileged methods.
+        var 
+        /** 
+            @class App used to manage the state of the application running on the client.
+            @namespace app
+            @constructor
+         */
+        App = function ( ) {
+            // Create an object to define private properties for class instances.
+            var 
+            _ = {
                 /**
-                 * initialize and configure the app
-                 * @method init
-                 * @privileged
-                 * @param {Object} $el a jQuery set containing the element to use as the container for the app • unless 
-                 * there is a good reason not to, the body element should be used
-                 * @param {Object} [options] a configuration object to override the default settings
+                    @property jQuery $el the container for the app
+                    @private
                  */
-                this.init = function ( $el, options ) {
+                $el: null,
+                /**
+                    @property {Array} loadedStates the current and all related states
+                    @private
+                 */
+                loadedStates: [ ],
+                /**
+                    @property app.History history interface to the browser's history
+                    @private
+                 */
+                history: null,
+                /**
+                    @property {Object} settings the settings for the app
+                    @private
+                 */
+                settings: { },
+                /**
+                    @method pushStates adds states to the app
+                    @private
+                    @param {Array} states a collection of objects with url, title and data properties
+                */
+                pushStates: function ( states, callback ) {
                     var app = this,
-                        settings; 
+                        state;
 
-                    // Call the method on the parent.
-                    parent.init.apply(this, arguments);
-                    // Initialize private, instance variables. 
-                    settings = app._get('settings');
-                    app._set('settings', $.extend(settings, App.defaults, options));
-                    app._set('history', new History(settings.historyApi, settings.onpopstate));
-                    app._$el = $el.addClass('app').data('app', app).click(function ( e ) {
-                        var $link = $(e.target).is('a') ? $(e.target) : $(e.target).closest('a'),
-                            url = $link.attr('href'),
-                            title = $link.text().trim();
-                            
-                        if ( $link.length !== 1 || !url ) {
-                            return;
-                        } else {
-                            if ( !title ) {
-                                $link.find('span').each(function ( ) {
-                                    title = title + $(this).text();
-                                });
-                            }
-                            if ( !title ) {
-                                title = $link.find('img').attr('alt');
-                            }
-                            // ... and for those with urls and titles...
-                            if ( title ) {
-                                // ... replace the states...
-                                // does the router bind to the app?
-                                console.log(url + ', ' + title);
-                                // ... and stop the location from changing.
-                                return false;
-                            } else {
-                                return;
-                            }
-                        }
-                    });
-                    // Add a reference to the instance on the constructor.
-                    App.addInstance(app);
-                };
-                /**
-                 * remove all traces of the app
-                 * @method remove
-                 * @privileged
-                 */
-                this.remove = function ( ) {
-                    var $el = this._get('$el');
-
-                    // Call the method on the parent.
-                    parent.remove.apply(this, arguments);
-                    // Remove DOM elements and events.
-                    if ( $el && $el.length ) {
-                        $el.empty().remove();
+                    if ( states.length ) {
+                        state = states.shift();
+                        app._call('pushState', state, function ( ) {
+                            app._call('pushStates', states, callback);
+                        });                         
+                    } else if ( typeof callback === 'function' ) {
+                        callback();
                     }
-                    // Delete the reference to the instance on the constructor.
-                    App.removeInstance(this);
-                };
+                },
+                /**
+                    @method popStates removes states from the app
+                    @private
+                    @param {Number} howMany the number of states to pop off the stack
+                    @param {Function} [callback] the function to call when the operation is completed
+                */
+                popStates: function ( howMany, callback ) {
+                    var app = this;
+
+                    if ( howMany ) {
+                        howMany--;
+                        app._call('popState', function ( ) {
+                            app._call('popStates', howMany, callback);
+                        });
+                    } else if ( typeof callback === 'function' ) {
+                        callback();
+                    }
+                },
+                /**
+                    @method _pushState push a new current state on to the loaded states 
+                    @private
+                    @param {Object} state an object with data, url and title properties
+                 */
+                pushState: function ( state, callback ) {
+                    var problemsWithState = checkImplementation(state, stateInterface),
+                        app = this,
+                        notification;
+
+                    if ( problemsWithState ) {
+                        throw problemsWithState;
+                    } else {
+                        notification = { 
+                            initiator: App.getName(), 
+                            type: App.events.app.PUSH_STATE, 
+                            content: $.extend(true, { }, state)
+                        };
+                        app.notifyResponders(notification, function ( ) {
+                            app._get('loadedStates').push(state);
+                            if ( typeof callback === 'function' ) {
+                                callback();
+                            }
+                        });
+                    }
+                },
+                /**
+                    @method _popState pops the current state from the loaded states
+                    @private
+                    @param {Function} [callback] the function to run when the operation is finished
+                 */
+                popState: function ( callback ) {
+                    var app = this,
+                        state = app.getCurrentState(),
+                        notification = { 
+                            initiator: App.getName(), 
+                            type: App.events.app.POP_STATE,
+                            content: state
+                        };
+
+                    if ( !state ) {
+                        throw 'Cannot popState() when none are loaded.';
+                    } else {
+                        app.notifyResponders(notification, function ( ) {
+                            app._get('loadedStates').pop();
+                            //TODO selective modify browser state
+                            app._get('history').pushState(state);
+                            if ( typeof callback === 'function' ) {
+                                callback();
+                            }
+                        });
+                    }
+                }
             };
+            // Call the parent constructor before modifying the instance...
+            App.prototype.constructor.call(this, _);
+            this.constructor = App;
+            /**
+                @method init initialize and configure the app
+                @privileged
+                @param {Object} $el a jQuery set containing the element to use as the container for the app • unless 
+                there is a good reason not to, the body element should be used
+                @param {Object} [options] a configuration object to override the default settings
+             */
+            this.init = function ( $el, options ) {
+                var app = this,
+                    settings; 
+
+                // Call the method on the parent.
+                App.prototype.constructor.prototype.init.apply(this, arguments);
+                // Initialize private, instance variables. 
+                settings = app._get('settings');
+                app._set('settings', $.extend(settings, App.defaults, options));
+                app._set('history', new History(settings.historyApi, settings.onpopstate));
+                app._$el = $el.addClass('app').data('app', app).click(function ( e ) {
+                    var $link = $(e.target).is('a') ? $(e.target) : $(e.target).closest('a'),
+                        url = $link.attr('href'),
+                        title = $link.text().trim();
+                        
+                    if ( $link.length !== 1 || !url ) {
+                        return;
+                    } else {
+                        if ( !title ) {
+                            $link.find('span').each(function ( ) {
+                                title = title + $(this).text();
+                            });
+                        }
+                        if ( !title ) {
+                            title = $link.find('img').attr('alt');
+                        }
+                        // ... and for those with urls and titles...
+                        if ( title ) {
+                            // ... replace the states...
+                            // does the router bind to the app?
+                            console.log(url + ', ' + title);
+                            // ... and stop the location from changing.
+                            return false;
+                        } else {
+                            return;
+                        }
+                    }
+                });
+                // Add a reference to the instance on the constructor.
+                App.addInstance(app);
+            };
+            /**
+             * remove all traces of the app
+             * @method remove
+             * @privileged
+             */
+            this.remove = function ( ) {
+                var $el = this._get('$el');
+
+                // Call the method on the parent.
+                App.prototype.constructor.prototype.remove.apply(this, arguments);
+                // Remove DOM elements and events.
+                if ( $el && $el.length ) {
+                    $el.empty().remove();
+                }
+                // Delete the reference to the instance on the constructor.
+                App.removeInstance(this);
+            };
+        };
         // Use the parent object as the prototype for the constructor function to establish inheritance.
-        App.prototype = parent; 
+        App.prototype = new Class(); 
         // Extend the prototype to add new public methods to instances of the class.
         /**
          * The states passed to the method will be compared with those currently loaded until a point of 
