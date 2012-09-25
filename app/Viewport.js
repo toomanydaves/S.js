@@ -1,4 +1,4 @@
-define([ 'jquery', 'utils/step', 'app/App' ], function ( $, step, App ) {
+define([ 'jquery', 'utils/step', 'app/AppClass' ], function ( $, step, App ) {
     /**
      * Viewport is used to display screens holding the content of individual viewpoints. These screens can be
      * shifted left and right, as the user moves deeper or shallower in a particular context, or replaced entirely when
