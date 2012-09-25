@@ -1,3 +1,3 @@
-define([ 'utils/pluginFactory', 'app/Viewport' ], function ( pluginFactory, Viewport ) {
-    pluginFactory.newJQueryPlugin(Viewport, true);
+define([ 'utils/pluginFactory', 'app/ViewportClass' ], function ( pluginFactory, ViewportClass ) {
+    pluginFactory.newJQueryPlugin(ViewportClass, true);
 });
