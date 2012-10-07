@@ -99,17 +99,27 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
                         }
                     );
                 }
-                $screen = $('<div class="' + name + '-screen"></div>')
-                    .appendTo($el)
-                    .css('left', $(window).width())
-                    .append('<img class="' + name + '-screen-loading" src="' + settings.loadingGif + '" />')
-                    .animate(
-                        { left: settings.screenMargin },
-                        settings.duration,
-                        'swing',
-                        function ( ) { step(inPosition); step(loadedAndInPosition); }
-                    );
-                $.get(url, data, function ( response ) { $screen.html(response); step(loadedAndInPosition); }, 'html');
+                $screen = $(
+                    [
+                        '<div class="' + name + '-screen">',
+                            '<div class="' + name + '-content">',
+                                '<img class="' + name + '-screen-loading" src="' + settings.loadingGif + '" />',
+                            '</div',
+                        '</div>'
+                    ].join('')
+                )
+                .appendTo($el)
+                .css('left', $(window).width())
+                .animate(
+                    { left: settings.screenMargin },
+                    settings.duration,
+                    'swing',
+                    function ( ) { step(inPosition); step(loadedAndInPosition); }
+                );
+                $.get(url, data, function ( response ) { 
+                	$screen.find('.' + name + '-content').html(response); 
+                	step(loadedAndInPosition); 
+                }, 'html');
             },
             /**
                 @method pop pop the active screen off the viewport
