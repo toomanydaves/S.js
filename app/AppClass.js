@@ -13,8 +13,11 @@ define (
     function ( $, _, History, Class, classify, mixin, initiator, checkImplementation, stateInterface ) {
         var 
         /** 
-            @class App used to manage the state of the application running on the client.
+            Used to manage the state of the application running on the client.
+            @class AppClass 
             @namespace app
+            @module app
+            @extends utils.Class
             @constructor
          */
         App = function ( ) {
@@ -22,29 +25,34 @@ define (
             var 
             _ = {
                 /**
-                    @property jQuery $el the container for the app
+                    The container for the app
+                    @property jQuery $el 
                     @private
                  */
                 $el: null,
                 /**
-                    @property {Array} loadedStates the current and all related states
+                    The current and all related states
+                    @property {Array} loadedStates 
                     @private
                  */
                 loadedStates: [ ],
                 /**
-                    @property app.History history interface to the browser's history
+                    Interface to the browser's history
+                    @property app.History history 
                     @private
                  */
                 history: null,
                 /**
-                    @property {Object} settings the settings for the app
+                    The settings for the app
+                    @property {Object} settings 
                     @private
                  */
                 settings: { },
                 /**
-                    @method pushStates adds states to the app
+                    Adds states to the app
+                    @method pushStates 
                     @private
-                    @param {Array} states a collection of objects with url, title and data properties
+                    @param {Array} states A collection of objects with url, title and data properties
                 */
                 pushStates: function ( states, callback ) {
                     var app = this,
@@ -60,10 +68,11 @@ define (
                     }
                 },
                 /**
-                    @method popStates removes states from the app
+                    Removes states from the app
+                    @method popStates 
                     @private
-                    @param {Number} howMany the number of states to pop off the stack
-                    @param {Function} [callback] the function to call when the operation is completed
+                    @param {Number} howMany The number of states to pop off the stack
+                    @param {Function} [callback] The function to call when the operation is completed
                 */
                 popStates: function ( howMany, callback ) {
                     var app = this;
@@ -78,9 +87,10 @@ define (
                     }
                 },
                 /**
-                    @method _pushState push a new current state on to the loaded states 
+                    Push a new current state on to the loaded states 
+                    @method _pushState 
                     @private
-                    @param {Object} state an object with data, url and title properties
+                    @param {Object} state An object with data, url and title properties
                  */
                 pushState: function ( state, callback ) {
                     var problemsWithState = checkImplementation(state, stateInterface),
@@ -104,9 +114,10 @@ define (
                     }
                 },
                 /**
-                    @method _popState pops the current state from the loaded states
+                    Pops the current state from the loaded states
+                    @method _popState 
                     @private
-                    @param {Function} [callback] the function to run when the operation is finished
+                    @param {Function} [callback] The function to run when the operation is finished
                  */
                 popState: function ( callback ) {
                     var app = this,
@@ -135,11 +146,10 @@ define (
             App.prototype.constructor.call(this, _);
             this.constructor = App;
             /**
-                @method init initialize and configure the app
-                @privileged
-                @param {Object} $el a jQuery set containing the element to use as the container for the app • unless 
-                there is a good reason not to, the body element should be used
-                @param {Object} [options] a configuration object to override the default settings
+                Initialize and configure the app
+                @method init 
+                @param {Object} $el A jQuery set containing the element to use as the container for the app • unless there is a good reason not to, the body element should be used
+                @param {Object} [options] A configuration object to override the default settings
              */
             this.init = function ( $el, options ) {
                 var app = this,
@@ -183,9 +193,8 @@ define (
                 App.addInstance(app);
             };
             /**
-             * remove all traces of the app
-             * @method remove
-             * @privileged
+                Remove all traces of the app
+                @method remove
              */
             this.remove = function ( ) {
                 var $el = this._get('$el');
@@ -204,12 +213,10 @@ define (
         App.prototype = new Class(); 
         // Extend the prototype to add new public methods to instances of the class.
         /**
-         * The states passed to the method will be compared with those currently loaded until a point of 
-         * diversion is found. From that point on all existing states will be removed and any new states 
-         * will be added.
-         * @method replaceStates
-         * @param {Array} states An array of objects containing title, data and url properties
-         * @param {Function} [callback] A function to call once the operation is finished
+            The states passed to the method will be compared with those currently loaded until a point of  diversion is found. From that point on all existing states will be removed and any new states will be added.
+            @method replaceStates
+            @param {Array} states An array of objects containing title, data and url properties
+            @param {Function} [callback] A function to call once the operation is finished
          */
         App.prototype.replaceStates = function ( states, callback ) {
             var app = this,
@@ -267,9 +274,9 @@ define (
             });
         };
         /**
-         * add a collection of states to the app
-         * @method pushStates
-         * @param {Array} states A collection of objects with data, title and url properties
+            Add a collection of states to the app
+            @method pushStates
+            @param {Array} states A collection of objects with data, title and url properties
          */
         App.prototype.pushStates = function ( states, callback ) {
             var app = this,
@@ -306,34 +313,33 @@ define (
         };
         // Extend the constructor function to add static properties and methods.
         /**
-         * default config for all app instances
-         * @property defaults map of property-values
-         * @type {Object}
-         * @static
+            Default config for all app instances
+            @property defaults Map of property-values
+            @type {Object}
+            @static
          */
         App.defaults = {
             /**
-             * a space-delimited list of the types of History APIs to support • currently only HTML5 supported
-             * @attribute {String} historyApi
-             * @default 'HTML5'
-             */
+                A space-delimited list of the types of History APIs to support • currently only HTML5 supported
+                @attribute {String} historyApi
+                @default 'HTML5'
+            */
             historyApi: 'HTML5',
             /**
-             * the function to run when window.onpopstate is triggered
-             * @attribute {Function} onpopstate
-             * @default function ( e ) { console.log('onpopstate', e); }
+                The function to run when window.onpopstate is triggered
+                @attribute {Function} onpopstate
+                @default function ( e ) { console.log('onpopstate', e); }
              */
             onpopstate: function ( e ) {
                 console.log('onpopstate', e);
             }
         };
         /**
-         * a namespaced map of constants used to identify types of events
-         * @property {Object} events
-         * a map of class names to objects containing constant names and values used to identify types of events
-         * @property events
-         * @type {Object}
-         * @static
+            A namespaced map of constants used to identify types of events
+            @property {Object} events A map of class names to objects containing constant names and values used to identify types of events
+            @property events
+            @type {Object}
+            @static
          */
         App.events = {
             app: {

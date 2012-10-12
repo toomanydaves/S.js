@@ -30,7 +30,7 @@ define([ ], function ( ) {
 		 * Get the name of the interface
 		 * @method getName
 		 * @static
-		 * @returns 'responder'
+		 * @return 'responder'
 		 */
 		getName: function ( ) {
 			return this._name;

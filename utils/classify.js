@@ -30,7 +30,7 @@ define([ ], function ( ) {
         /**
          * gets the number of existing instances
          * @method getCount
-         * @returns {Number}
+         * @return {Number}
          */
         Constructor.getCount = function ( ) {
             return this._instances.length;
@@ -39,7 +39,7 @@ define([ ], function ( ) {
          * returns the name of the class
          * @method getName
          * @static
-         * @returns {String}  
+         * @return {String}  
          */
         Constructor.getName = function ( ) {
             return this._name;
@@ -58,7 +58,7 @@ define([ ], function ( ) {
          * returns the namespace of the class
          * @method getNamespace
          * @static
-         * @returns {String} 
+         * @return {String} 
          */
         Constructor.getNamespace = function ( ) {
             return this._namespace;

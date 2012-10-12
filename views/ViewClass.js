@@ -5,12 +5,13 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
 	*/
     var parent = new Class(),
         /**
-         * @class ViewClass a base class for views
-         * @namespace view
-         * @extends utils.Class
-         * @param {Object} [_] A map of name-value pairs to add as private properties for the instance.
-         * @constructor
-         */
+         a base class for views
+         @class ViewClass 
+         @namespace view
+         @extends utils.Class
+         @param {Object} [_] A map of name-value pairs to add as private properties for the instance.
+         @constructor
+        */
         View = function ( _ ) {
             /* 
             Use an object to define private, instance properties, while incorporating any non-conflicting private 
@@ -68,7 +69,6 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
             this.constructor = View;
             /**
              * @method init initialize and configure
-             * @privileged
              * @param {Object} $el a jQuery set containing the element to use as the container for the view
              * @param {Object} [options] a configuration object to override the default settings
              */
@@ -90,7 +90,6 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
             };
             /**
              * @method remove remove all traces of the instance
-             * @privileged
              */
             this.remove = function ( ) {
                 var $el = this._get('$el');

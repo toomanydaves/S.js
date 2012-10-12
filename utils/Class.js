@@ -1,15 +1,18 @@
 define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
 	/**
-	 * @class Class
-	 * @constructor
-	 * @param {Object} [_] key-value mapping for defining private instance varialbles
-	 */
+        A constructor function to use as the basis for class-based inheritance. It adds methods for getting, settings and calling private, instance properties.
+        @class Class
+        @namespace utils
+        @module utils
+        @constructor
+        @param {Object} [_] Key-value mapping for defining private instance variables
+	*/
 	var Class =  function ( _ ) {
 		/**
-         * call a private method of the instance
-		 * @method _call
-		 * @private
-		 * @param {String} method the name of a private instance method to call
+             Call a private method of the instance
+             @method _call
+             @private
+             @param {String} method The name of a private instance method to call
 		 */
         this._call = function ( method ) {
             var args,
@@ -28,12 +31,12 @@ define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
             }
         };
         /**
-         * get the value of a private property of the instance
-         * @method _get
-         * @private
-         * @param {String} property the name of the property whose value should be returned
-         * @return unknown the value of the property
-         */
+            Get the value of a private property of the instance
+            @method _get
+            @private
+            @param {String} property The name of the property whose value should be returned
+            @return unknown The value of the property
+        */
         this._get = function ( property ) {
             var getter;
 
@@ -49,12 +52,12 @@ define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
             }
         };
         /**
-         * set the value of a private property of the instance
-         * @method _set
-         * @private
-         * @param {String} property the name of the property whose value should be set
-         * @param unknown the value to assign to the property
-         */
+            Set the value of a private property of the instance
+            @method _set
+            @private
+            @param {String} property The name of the property whose value should be set
+            @param unknown The value to assign to the property
+        */
         this._set = function ( property, value ) {
             var setter;
 

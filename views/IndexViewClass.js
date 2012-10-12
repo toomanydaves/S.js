@@ -20,7 +20,7 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
                 $el: null,
                 /**
                  * the currently selected lists
-                 * @propery selectedLists
+                 * @property selectedLists
                  * @type {Array}
                  * @private
                  */
@@ -182,7 +182,6 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
             /**
              * initialize and configure
              * @method init
-             * @privileged
              * @param {Object} $el a jQuery set containing the element to use as the container for the index
              * @param {Object} [options] a configuration object to override the default settings
              */
@@ -206,7 +205,6 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
             /**
              * remove all traces of the instance
              * @method remove
-             * @privileged
              */
             this.remove = function ( ) {
                 var $el = this._get('$el');

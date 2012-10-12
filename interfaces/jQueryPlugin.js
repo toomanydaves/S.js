@@ -3,8 +3,6 @@ define([ ], function ( ) {
 	 * The requirements that any class used as the basis for a jQuery plugin must fulfill.
 	 * @class JQueryPlugin
 	 * @namespace interfaces
-	 * @interface
-	 * @singleton
 	 */
 	return {
 		/**
@@ -36,7 +34,7 @@ define([ ], function ( ) {
 		 * Get the name of the interface
 		 * @method getName
 		 * @static
-		 * @returns 'JQueryPlugin'
+		 * @return 'JQueryPlugin'
 		 */
 		getName: function ( ) {
 			return this._name;

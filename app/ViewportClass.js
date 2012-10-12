@@ -1,7 +1,7 @@
 define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, Class, AppClass, step ) {
     /**
-        @class ViewportClass used to display screens holding the content of individual viewpoints. These screens can be
-        shifted left and right, as the user moves deeper or shallower in a particular context, or replaced entirely 
+        used to display screens holding the content of individual viewpoints. These screens can be shifted left and right, as the user moves deeper or shallower in a particular context, or replaced entirely 
+        @class ViewportClass 
         @namespace app
         @extends utils.Class
         @param {Object} [_] a collection of private properties to add to the instance
@@ -173,7 +173,6 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
     	this.constructor = ViewportClass;
         /**
             @method init config and initialize the viewport
-            @privileged
             @param {Object} $el a jQuery object wrapping the element to use as the container for the viewport
             @param {Object} [options] a collection of key-value pairs to store in the settings of the viewport
         */
@@ -191,7 +190,6 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
         };
         /**
             @method remove removes all traces of the viewport
-            @privileged
         */
         this.remove = function ( ) {
             var $el = this._get('$el');

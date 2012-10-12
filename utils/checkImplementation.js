@@ -2,10 +2,10 @@ define ([ 'jquery' ], function ( $ ) {
 	/**
 	 * checks whether a class implements all the static and instance methods defined in the properties of the interface
 	 * @namespace sjs.utilities
-	 * @function checkImplementation
-	 * @params {Function} Class
-	 * @params {Object} Interface
-	 * @returns {String} An error message, if one is necessary
+	 * @method checkImplementation
+	 * @param {Function} Class
+	 * @param {Object} Interface
+	 * @return {String} An error message, if one is necessary
 	 */
     checkImplementation = function ( implementation, Interface ) {
         var errors = [ ],

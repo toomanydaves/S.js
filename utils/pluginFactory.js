@@ -9,7 +9,6 @@ define(
          * An singleton-style object to use to create plugins from classes.
          * @class PluginFactory
          * @namespace utilities
-         * @singleton
          */
         pluginFactory = { 
             /**
@@ -80,8 +79,8 @@ define(
              * properties.
              * @method _getRequest
              * @private
-             * @params {Array} args
-             * @returns {Object} A request object containing a method property with the string name of the method to be 
+             * @param {Array} args
+             * @return {Object} A request object containing a method property with the string name of the method to be 
              * called and an args property containing an array of arguments to be passed to the method.
              */
             _getRequest: function ( args ) {
