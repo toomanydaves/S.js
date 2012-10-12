@@ -163,26 +163,32 @@ define (
                 app._set('history', new History(settings.historyApi, settings.onpopstate));
                 app._$el = $el.addClass('app').data('app', app).click(function ( e ) {
                     var $link = $(e.target).is('a') ? $(e.target) : $(e.target).closest('a'),
-                        url = $link.attr('href'),
-                        title = $link.text().trim();
+                        state = {
+                            url: $link.attr('href'),
+                            title: $link.attr('title'),
+                            data: $link.data('state')
+                        };;
                         
-                    if ( $link.length !== 1 || !url ) {
+                    if ( $link.length !== 1 || !state.url ) {
                         return;
                     } else {
-                        if ( !title ) {
+                    	if ( !state.title ) {
+                    		state.title = $link.text().trim();
+                    	}
+                        if ( !state.title ) {
                             $link.find('span').each(function ( ) {
-                                title = title + $(this).text();
+                                state.title = state.title + $(this).text();
                             });
                         }
-                        if ( !title ) {
-                            title = $link.find('img').attr('alt');
+                        if ( !state.title ) {
+                            state.title = $link.find('img').attr('alt');
                         }
-                        // ... and for those with urls and titles...
-                        if ( title ) {
-                            // ... replace the states...
-                            // does the router bind to the app?
-                            console.log(url + ', ' + title);
-                            // ... and stop the location from changing.
+                        if ( state.title ) {
+                            if ( $link.hasClass('push-state') ) {
+                            	app.pushStates([ state ]);
+                            } else {
+                            	app.replaceStates([ state ]);
+                            }
                             return false;
                         } else {
                             return;
@@ -330,9 +336,7 @@ define (
                 @attribute {Function} onpopstate
                 @default function ( e ) { console.log('onpopstate', e); }
              */
-            onpopstate: function ( e ) {
-                console.log('onpopstate', e);
-            }
+            onpopstate: function ( e ) { }
         };
         /**
             A namespaced map of constants used to identify types of events
