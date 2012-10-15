@@ -1,7 +1,8 @@
 define([ 'utils/Class' ], function ( Class ) {
     var 
     /** 
-        @class WindowClass used to wrap and extend the functionality of the global window object
+        Used to wrap and extend the functionality of the global window object
+        @class WindowClass 
         @namespace app
         @extends utils.Class
         @constructor 
@@ -27,8 +28,5 @@ define([ 'utils/Class' ], function ( Class ) {
 
     WindowClass.prototype = new Class();
 	// AMD: return a singleton to pass as a parameter in calls to require/define.
-	/**
-	    @singleton 
-	*/
 	return new WindowClass();
 });

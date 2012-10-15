@@ -60,8 +60,8 @@ define (
 
                     if ( states.length ) {
                         state = states.shift();
-                        app._call('pushState', state, function ( ) {
-                            app._call('pushStates', states, callback);
+                        app.call_('pushState', state, function ( ) {
+                            app.call_('pushStates', states, callback);
                         });                         
                     } else if ( typeof callback === 'function' ) {
                         callback();
@@ -79,8 +79,8 @@ define (
 
                     if ( howMany ) {
                         howMany--;
-                        app._call('popState', function ( ) {
-                            app._call('popStates', howMany, callback);
+                        app.call_('popState', function ( ) {
+                            app.call_('popStates', howMany, callback);
                         });
                     } else if ( typeof callback === 'function' ) {
                         callback();
@@ -88,7 +88,7 @@ define (
                 },
                 /**
                     Push a new current state on to the loaded states 
-                    @method _pushState 
+                    @method pushState 
                     @private
                     @param {Object} state An object with data, url and title properties
                  */
@@ -106,7 +106,7 @@ define (
                             content: $.extend(true, { }, state)
                         };
                         app.notifyResponders(notification, function ( ) {
-                            app._get('loadedStates').push(state);
+                            app.get_('loadedStates').push(state);
                             if ( typeof callback === 'function' ) {
                                 callback();
                             }
@@ -115,7 +115,7 @@ define (
                 },
                 /**
                     Pops the current state from the loaded states
-                    @method _popState 
+                    @method popState 
                     @private
                     @param {Function} [callback] The function to run when the operation is finished
                  */
@@ -132,9 +132,9 @@ define (
                         throw 'Cannot popState() when none are loaded.';
                     } else {
                         app.notifyResponders(notification, function ( ) {
-                            app._get('loadedStates').pop();
+                            app.get_('loadedStates').pop();
                             //TODO selective modify browser state
-                            app._get('history').pushState(state);
+                            app.get_('history').pushState(state);
                             if ( typeof callback === 'function' ) {
                                 callback();
                             }
@@ -159,9 +159,9 @@ define (
                 App.prototype.constructor.prototype.init.apply(this, arguments);
                 // Initialize private, instance variables. 
                 settings = app._get('settings');
-                app._set('settings', $.extend(settings, App.defaults, options));
-                app._set('history', new History(settings.historyApi, settings.onpopstate));
-                app._$el = $el.addClass('app').data('app', app).click(function ( e ) {
+                app.set_('settings', $.extend(settings, App.defaults, options));
+                app.set_('history', new History(settings.historyApi, settings.onpopstate));
+                app.set_('$el', $el.addClass('app').data('app', app).click(function ( e ) {
                     var $link = $(e.target).is('a') ? $(e.target) : $(e.target).closest('a'),
                         state = {
                             url: $link.attr('href'),
@@ -194,7 +194,7 @@ define (
                             return;
                         }
                     }
-                });
+                }));
                 // Add a reference to the instance on the constructor.
                 App.addInstance(app);
             };
@@ -227,7 +227,7 @@ define (
         App.prototype.replaceStates = function ( states, callback ) {
             var app = this,
                 name = App.getName(),
-                loadedStates = app._get('loadedStates'),
+                loadedStates = app.get_('loadedStates'),
                 state = _.last(states),
                 deactivation = { 
                     initiator: name, 
@@ -260,13 +260,13 @@ define (
                     }
                 }    
                 // Remove any loadedStates beyond the point of divergence,...
-                app._call('popStates', loadedStates.length - index, function ( ) {
+                app.call_('popStates', loadedStates.length - index, function ( ) {
                     // ... then pause for a moment (if states were removed)...
                     setTimeout(
                         function ( ) {
                             // ... before adding any new ones.
                             app.pushStates(_.rest(states, index), function ( ) {
-                                app._get('history').pushState(state);
+                                app.get_('history').pushState(state);
                                 app.notifyResponders(activation, function ( ) {
                                     if ( typeof callback === 'function' ) {
                                         callback();
@@ -288,8 +288,8 @@ define (
             var app = this,
                 state = _.last(states);
 
-            app._call('pushStates', states, function ( ) {
-                app._get('history').pushState(state);
+            app.call_('pushStates', states, function ( ) {
+                app.get_('history').pushState(state);
                 if ( typeof callback === 'function' ) {
                     callback();
                 }
@@ -297,18 +297,18 @@ define (
         };
         App.prototype.popStates = function ( howMany, callback ) {
             var app = this,
-                loadedStates = app._get('loadedStates'),
+                loadedStates = app.get_('loadedStates'),
                 state = loadedStates[loadedStates.length - howMany - 1];
 
-            app._call('popStates', howMany, function ( ) {
-                app._get('history').pushState(state);
+            app.call_('popStates', howMany, function ( ) {
+                app.get_('history').pushState(state);
                 if ( typeof callback === 'function' ) {
                     callback();
                 }
             });
         };
         App.prototype.getCurrentState = function ( ) {
-            var loadedStates = this._get('loadedStates'),
+            var loadedStates = this.get_('loadedStates'),
                 numberOfLoadedStates = loadedStates.length,
                 currentState;
             

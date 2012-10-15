@@ -50,9 +50,9 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
              */
             push: function ( url, data, waitFor, callback ) {
                 var viewport = this,
-                    settings = viewport._get('settings'),
+                    settings = viewport.get_('settings'),
                     name = ViewportClass.getName().toLowerCase(),
-                    $el = viewport._get('$el'),
+                    $el = viewport.get_('$el'),
                     $screens = $('.' + name + '-screen', $el),
                     $activeScreen,
                     $screen,
@@ -130,8 +130,8 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
             pop: function ( waitFor, callback ) {
                 var viewport = this,
                     name = ViewportClass.getName().toLowerCase(),
-                    settings = viewport._get('settings'),
-                    $el = viewport._get('$el'),
+                    settings = viewport.get_('settings'),
+                    $el = viewport.get_('$el'),
                     $screens = $('.' + name + '-screen', $el),
                     $activeScreen = $screens.filter(':last'),
                     tryCallback,
@@ -194,15 +194,15 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
             	throw('ViewClass expects it\'s prototype to implement an init method.');
             }
             ViewportClass.prototype.init.apply(this, arguments);
-            viewport._set('settings', $.extend(true, ViewportClass.defaults, options));
-            viewport._set('$el', $el.addClass(name).data(name, viewport));
+            viewport.set_('settings', $.extend(true, ViewportClass.defaults, options));
+            viewport.set_('$el', $el.addClass(name).data(name, viewport));
             ViewportClass.addInstance(viewport);
         };
         /**
             @method remove removes all traces of the viewport
         */
         this.remove = function ( ) {
-            var $el = this._get('$el');
+            var $el = this.get_('$el');
 
             if ( typeof ViewportClass.prototype.remove === 'function' ) {
             	ViewportClass.prototype.remove(this, arguments);
@@ -219,7 +219,7 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
      * @param mixin.Initiator initiator
      */
     ViewportClass.prototype.addInitiator = function (initiator) {
-        var initiators = this._get('initiators');
+        var initiators = this.get_('initiators');
 
         if ( 
             initiator.constructor && 
@@ -254,7 +254,7 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
     ViewportClass.prototype.respondToNotification = function (notification, waitFor, callback) {
         var viewport = this,
             initiator = notification.initiator,
-            initiators = viewport._get('initiators'),
+            initiators = viewport.get_('initiators'),
             respondsToInitiator = (
                 initiator && initiators.length ?  
                 ( initiators.indexOf(notification.initiator) >= 0 ) :
@@ -280,19 +280,19 @@ define([ 'jquery', 'utils/Class', 'app/AppClass', 'utils/step' ], function ( $, 
                                 'Viewport requires a string value for the url property of the notification content'
                             );
                         }
-                        viewport._call('push', url, notification.content.data, waitFor, callback);
+                        viewport.call_('push', url, notification.content.data, waitFor, callback);
                         response = initiatorEvents.WAIT;
                         break;
                     case appEvents.POP_STATE:
-                        viewport._call('pop', waitFor, callback);
+                        viewport.call_('pop', waitFor, callback);
                         response = initiatorEvents.WAIT;
                         break;
                     case appEvents.ACTIVATE:
-                        viewport._call('activate');
+                        viewport.call_('activate');
                         response = initiatorEvents.PROCEED;
                         break;
                     case appEvents.DEACTIVATE:
-                        viewport._call('deactivate');
+                        viewport.call_('deactivate');
                         response = initiatorEvents.PROCEED;
                         break;
                     default:

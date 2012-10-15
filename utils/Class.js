@@ -1,6 +1,6 @@
 define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
 	/**
-        A constructor function to use as the basis for class-based inheritance. It adds methods for getting, settings and calling private, instance properties.
+        A constructor function to use as the basis for class-based inheritance. It takes an object containing the names and starting values for private, instance properties, and adds methods for getting and setting those properties, and in the case of methods, for calling them. If property "x" is defined, and "getX" or "setX" is also defined, then they will be used automatically as the getter and setter. If property "x" is a function, and "callX" is also defined, then it will be called instead of calling the method directly. 
         @class Class
         @namespace utils
         @module utils
@@ -10,11 +10,10 @@ define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
 	var Class =  function ( _ ) {
 		/**
              Call a private method of the instance
-             @method _call
-             @private
+             @method call_
              @param {String} method The name of a private instance method to call
 		 */
-        this._call = function ( method ) {
+        this.call_ = function ( method ) {
             var args,
                 caller;
 
@@ -32,12 +31,11 @@ define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
         };
         /**
             Get the value of a private property of the instance
-            @method _get
-            @private
+            @method get_
             @param {String} property The name of the property whose value should be returned
             @return unknown The value of the property
         */
-        this._get = function ( property ) {
+        this.get_ = function ( property ) {
             var getter;
 
             if ( typeof _[property] !== 'undefined' ) {
@@ -53,12 +51,11 @@ define([ 'jquery', 'utils/classify' ], function ( $, classify ) {
         };
         /**
             Set the value of a private property of the instance
-            @method _set
-            @private
+            @method set_
             @param {String} property The name of the property whose value should be set
             @param unknown The value to assign to the property
         */
-        this._set = function ( property, value ) {
+        this.set_ = function ( property, value ) {
             var setter;
 
             if ( typeof _[property] !== 'undefined' ) {
