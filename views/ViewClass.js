@@ -82,9 +82,9 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
                     parent.init.apply(this, arguments);
                 }
                 // Initialize private, instance variables. 
-                settings = view._get('settings');
-                view._set('settings', $.extend(settings, View.defaults, options));
-                view._set('$el', $el.addClass('view').data('view', view));
+                settings = view.get_('settings');
+                view.set_('settings', $.extend(settings, View.defaults, options));
+                view.set_('$el', $el.addClass('view').data('view', view));
                 // Add a reference to the instance on the constructor.
                 View.addInstance(view);
             };
@@ -92,7 +92,7 @@ define([ 'jquery', 'utils/Class' ], function ( $, Class ) {
              * @method remove remove all traces of the instance
              */
             this.remove = function ( ) {
-                var $el = this._get('$el');
+                var $el = this.get_('$el');
 
                 // If it exists...
                 if ( typeof parent.remove === 'function' ) {

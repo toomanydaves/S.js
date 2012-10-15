@@ -36,7 +36,7 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
                 setInstructions: function ( instructions ) {
                     var index = this,
                         name = Index.getName().toLowerCase(),
-                        $el = index._get('$el'),
+                        $el = index.get_('$el'),
                         $instructions = $('.' + name + '-instructions'),
                         instructions = instructions || index.get('settings').instructions,
                         instructionsLength = instructions.length;
@@ -64,11 +64,11 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
                 setLists: function ( lists ) {
                     var index = this,
                         name = Index.getName().toLowerCase(),
-                        $el = index._get('$el'),
-                        selectedLists = index._get('selectedLists'),
+                        $el = index.get_('$el'),
+                        selectedLists = index.get_('selectedLists'),
                         $numberOfSelectedLists = $('.number-of-selected-lists', $el),
                         $lists = $('.' + name + '-lists'),
-                        lists = lists || index.get('settings').lists,
+                        lists = lists || index.get_('settings').lists,
                         listHtml = [
                             '<div class="' + name + '-list">',
                                 '<div class="' + name '-list-actions">',
@@ -145,7 +145,7 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
                 setActions: function ( ) {
                     var index = this,
                         name = Index.getName().toLowerCase(),
-                        i18n = index._get('settings').i18n,
+                        i18n = index.get_('settings').i18n,
                         $actions;
 
                     $actions = $([
@@ -161,7 +161,7 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
                                 '</div>',
                             '</div>',
                         '</div>'
-                    ].join('')).appendTo(index.get('$el'));
+                    ].join('')).appendTo(index.get_('$el'));
                     $('.' + name + '-add-screen', $actions).click(function ( ) {
                         //TODO
                         alert('CHANGE STATE');
@@ -192,13 +192,13 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
                 // Call the method on the parent.
                 parent.init.apply(this, arguments);
                 // Initialize private, instance variables. 
-                settings = index._get('settings');
-                index._set('settings', $.extend(settings, App.defaults, options));
-                index._set('$el', $el.addClass('index').data('index', index));
+                settings = index.get_('settings');
+                index.set_('settings', $.extend(settings, App.defaults, options));
+                index.set_('$el', $el.addClass('index').data('index', index));
                 // Add elements to the DOM.
-                index._call('setInstructions');
-                index._call('setLists');
-                index._call('setActions');
+                index.call_('setInstructions');
+                index.call_('setLists');
+                index.call_('setActions');
                 // Add a reference to the instance on the constructor.
                 Index.addInstance(index);
             };
@@ -207,7 +207,7 @@ define([ 'jquery', 'views/ViewClass' ], function ( $, ViewClass ) {
              * @method remove
              */
             this.remove = function ( ) {
-                var $el = this._get('$el');
+                var $el = this.get_('$el');
 
                 // Call the method on the parent.
                 parent.remove.apply(this, arguments);
